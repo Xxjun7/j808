@@ -2,17 +2,17 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<title>jBoxCx2En 計算器</title>
+<title>jBox 計算器</title>
 <link rel="icon" href="Jicon.ico" type="image/x-icon">
 <style>
   body { font-family: Arial, sans-serif; background: #222; color: #fff; }
   #calculator-container {
     position: fixed;
-    top: 25px;
-    right: 1%;
+    top: 0px;        /* 左上角距離上方 25px */
+    left: 0px;       /* 左上角距離左側 25px */
     width: 180px;
     padding: 10px;
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0,0,0,0.7); /* 透明黑底 */
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
     z-index: 99999;
@@ -81,10 +81,8 @@ const verificationUrl = 'https://xxjun7.github.io/jkey/';
 const verificationText = 'j1 ok';
 const container = document.getElementById('calculator');
 
-// 歷程資料
 let historyList = [];
 
-// 驗證頁面
 fetch(verificationUrl)
   .then(response => response.text())
   .then(html => {
@@ -99,7 +97,6 @@ fetch(verificationUrl)
     alert('驗證頁面抓取失敗，無法啟動計算器');
   });
 
-// 初始化計算器
 function initCalculator() {
   const calc = document.createElement('div');
 
@@ -149,7 +146,6 @@ function initCalculator() {
   let clickTimer = null;
   const clickTimeout = 600;
 
-  // 三擊清空
   calc.addEventListener('click', (event) => {
     if (input.contains(event.target) || copyBtn.contains(event.target)) return;
     clickCount++;
