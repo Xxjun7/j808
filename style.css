@@ -1,116 +1,58 @@
-*{
-    box-sizing:border-box;
-}
-
 body{
-
+    font-family: Arial,"Microsoft JhengHei";
+    background:#0f172a;
+    color:white;
     margin:0;
-    background:#f4f4f4;
-    font-family:Arial,"微軟正黑體";
-
 }
 
 .container{
-
-    width:95%;
-    max-width:1200px;
-    margin:30px auto;
-
+    max-width:900px;
+    margin:40px auto;
+    text-align:center;
 }
 
 h1{
-
-    text-align:center;
-    color:#005BAC;
-
+    color:#38bdf8;
 }
 
-.toolbar{
-
-    display:flex;
-    gap:10px;
-    margin-bottom:20px;
-
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    margin-top:20px;
 }
 
-input{
-
-    flex:1;
-    padding:10px;
-    font-size:16px;
-
+.card{
+    background:#1e293b;
+    padding:20px;
+    border-radius:12px;
 }
 
-button{
-
-    padding:10px 20px;
-    border:none;
-    background:#005BAC;
-    color:white;
-    cursor:pointer;
-
+.title{
+    color:#94a3b8;
+    font-size:14px;
 }
 
-button:hover{
-
-    background:#004080;
-
+.value{
+    font-size:28px;
+    font-weight:bold;
+    margin-top:10px;
+    color:#22c55e;
 }
 
-#updateTime{
-
-    margin-bottom:15px;
-    color:#666;
-
+#status{
+    margin:10px;
+    color:#94a3b8;
 }
 
-table{
-
-    width:100%;
-    border-collapse:collapse;
-    background:white;
-
-}
-
-th{
-
-    background:#005BAC;
-    color:white;
-
-}
-
-th,td{
-
-    border:1px solid #ddd;
-    padding:8px;
-    text-align:center;
-
-}
-
-tbody tr:nth-child(even){
-
-    background:#f8f8f8;
-
-}
-
-tbody tr:hover{
-
-    background:#ffffcc;
-
-}
-
-@media(max-width:768px){
-
-table{
-
+#time{
+    margin-top:20px;
+    color:#64748b;
     font-size:12px;
-
 }
 
-th,td{
-
-    padding:5px;
-
-}
-
+@media(max-width:600px){
+    .grid{
+        grid-template-columns:1fr;
+    }
 }
