@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>臺灣銀行牌告匯率</title>
+
+<style>
+body{
+    font-family: Arial, "微軟正黑體";
+    margin:20px;
+    background:#f5f5f5;
+}
+
+h2{
+    color:#0066cc;
+}
+
+button{
+    padding:10px 20px;
+    cursor:pointer;
+    margin-bottom:15px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+}
+
+th{
+    background:#0066cc;
+    color:white;
+}
+
+th,td{
+    border:1px solid #ccc;
+    padding:8px;
+    text-align:center;
+}
+
+tr:nth-child(even){
+    background:#f8f8f8;
+}
+
+#error{
+    color:red;
+    margin-top:10px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h2>臺灣銀行即期匯率(CSV)</h2>
+
+<button onclick="loadCSV()">重新整理</button>
+
+<div id="error"></div>
+
+<table id="table"></table>
+
+<script>
+
+async function loadCSV(){
+
+    document.getElementById("error").innerHTML="";
+
+    try{
+
+        const url="https://rate.bot.com.tw/xrt/flcsv/0/day";
+
+        const response=await fetch(url);
+
+        if(!response.ok){
+            throw new Error("下載失敗");
+        }
+
+        const text=await response.text();
+
+        const rows=text.trim().split("\n");
+
+        let html="";
+
+        rows.forEach((row,index)=>{
+
+            const cols=row.split(",");
+
+            html+="<tr>";
+
+            cols.forEach(col=>{
+
+                if(index==0){
+                    html+="<th>"+col+"</th>";
+                }else{
+                    html+="<td>"+col+"</td>";
+                }
+
+            });
+
+            html+="</tr>";
+
+        });
+
+        document.getElementById("table").innerHTML=html;
+
+    }
+    catch(e){
+
+        document.getElementById("error").innerHTML=
+        "無法讀取CSV，可能是瀏覽器 CORS 限制。";
+
+    }
+
+}
+
+loadCSV();
+
+</script>
+
+</body>
+</html>
