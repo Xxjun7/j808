@@ -1,98 +1,55 @@
-const API =
-"https://cors.j808vip.workers.dev/?url=" +
-encodeURIComponent("https://rate.bot.com.tw/xrt/flcsv/0/day");
+const API = "https://cors.j808vip.workers.dev/";
 
-const tableHead=document.querySelector("#rateTable thead");
-const tableBody=document.querySelector("#rateTable tbody");
+let lastData = null;
 
-const updateTime=document.getElementById("updateTime");
+async function load(){
 
-const search=document.getElementById("search");
-
-document.getElementById("reload").onclick=loadData;
-
-search.addEventListener("keyup",filterTable);
-
-async function loadData(){
-
-updateTime.innerHTML="讀取中...";
+const status = document.getElementById("status");
 
 try{
 
-const response=await fetch(API);
+const res = await fetch(API);
+const data = await res.json();
 
-if(!response.ok){
+updateUI(data);
 
-throw new Error("HTTP "+response.status);
-
-}
-
-const csv=await response.text();
-
-drawTable(csv);
-
-updateTime.innerHTML="更新："+new Date().toLocaleString();
+status.innerText = "更新成功";
 
 }catch(e){
 
-updateTime.innerHTML="讀取失敗："+e.message;
+status.innerText = "錯誤：" + e.message;
 
 }
 
 }
 
-function drawTable(csv){
+function updateUI(data){
 
-const rows=csv.trim().split(/\r?\n/);
+setText("cash_buy", data.cash_buy);
+setText("cash_sell", data.cash_sell);
+setText("spot_buy", data.spot_buy);
+setText("spot_sell", data.spot_sell);
 
-tableHead.innerHTML="";
-tableBody.innerHTML="";
-
-rows.forEach((row,index)=>{
-
-const tr=document.createElement("tr");
-
-const cols=row.split(",");
-
-cols.forEach(col=>{
-
-col=col.replace(/^"|"$/g,"");
-
-const cell=document.createElement(index===0?"th":"td");
-
-cell.textContent=col;
-
-tr.appendChild(cell);
-
-});
-
-if(index===0){
-
-tableHead.appendChild(tr);
-
-}else{
-
-tableBody.appendChild(tr);
+document.getElementById("time").innerText =
+"更新時間：" + new Date().toLocaleString();
 
 }
 
-});
+function setText(id, value){
+
+const el = document.getElementById(id);
+
+const old = parseFloat(el.innerText);
+
+el.innerText = value;
+
+// 漲跌顏色
+if(!isNaN(old)){
+    el.style.color = value > old ? "#22c55e" :
+                    value < old ? "#ef4444" : "#fff";
+}
 
 }
 
-function filterTable(){
-
-const keyword=search.value.toUpperCase();
-
-Array.from(tableBody.rows).forEach(row=>{
-
-row.style.display=row.innerText.toUpperCase().includes(keyword)
-?"":"none";
-
-});
-
-}
-
-loadData();
-
-setInterval(loadData,300000);
+load();
+setInterval(load, 30000);
