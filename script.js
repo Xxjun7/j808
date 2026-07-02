@@ -11,6 +11,8 @@ async function load() {
     const res = await fetch(API + "?t=" + Date.now());
     const data = await res.json();
 
+    if (!res.ok) throw new Error(data.error || "API error");
+
     updateUI(data);
 
     status.innerText = "更新成功";
@@ -24,31 +26,39 @@ async function load() {
 
 function updateUI(data) {
 
+  const el = document.getElementById("spot_sell");
+  const timeEl = document.getElementById("time");
+
+  if (!el) {
+    console.error("❌ HTML 缺少 spot_sell");
+    return;
+  }
+
   const value = data.spot_sell;
 
-  const el = document.getElementById("spot_sell");
-
-  // 顯示數值
   el.innerText = value;
 
-  // 漲跌顏色（跟上一筆比）
+  // 漲跌顏色
   if (lastSpotSell !== null) {
     if (value > lastSpotSell) {
       el.style.color = "#22c55e"; // 綠
     } else if (value < lastSpotSell) {
       el.style.color = "#ef4444"; // 紅
     } else {
-      el.style.color = "#fff";
+      el.style.color = "#ffffff";
     }
   }
 
   lastSpotSell = value;
 
-  document.getElementById("time").innerText =
-    "更新時間：" + new Date().toLocaleString("zh-TW");
+  if (timeEl) {
+    timeEl.innerText =
+      "更新時間：" + new Date().toLocaleString("zh-TW");
+  }
 }
 
+// 🚀 初次載入
 load();
 
-// ⏱ 改成 5 分鐘更新
+// 🔁 每 5 分鐘更新
 setInterval(load, 5 * 60 * 1000);
