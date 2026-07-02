@@ -1,64 +1,58 @@
 const API = "https://cors.j808vip.workers.dev/";
 
-let lastSpotSell = null;
+let lastData = null;
 
-async function load() {
+async function load(){
 
-  const status = document.getElementById("status");
+const status = document.getElementById("status");
 
-  try {
+try{
 
-    const res = await fetch(API + "?t=" + Date.now());
-    const data = await res.json();
+const res = await fetch(API + "?t=" + Date.now());
+const data = await res.json();
 
-    if (!res.ok) throw new Error(data.error || "API error");
+updateUI(data);
 
-    updateUI(data);
+status.innerText = "更新成功";
 
-    status.innerText = "更新成功";
+}catch(e){
 
-  } catch (e) {
+status.innerText = "錯誤：" + e.message;
 
-    status.innerText = "錯誤：" + e.message;
-
-  }
 }
 
-function updateUI(data) {
-
-  const el = document.getElementById("spot_sell");
-  const timeEl = document.getElementById("time");
-
-  if (!el) {
-    console.error("❌ HTML 缺少 spot_sell");
-    return;
-  }
-
-  const value = data.spot_sell;
-
-  el.innerText = value;
-
-  // 漲跌顏色
-  if (lastSpotSell !== null) {
-    if (value > lastSpotSell) {
-      el.style.color = "#22c55e"; // 綠
-    } else if (value < lastSpotSell) {
-      el.style.color = "#ef4444"; // 紅
-    } else {
-      el.style.color = "#ffffff";
-    }
-  }
-
-  lastSpotSell = value;
-
-  if (timeEl) {
-    timeEl.innerText =
-      "更新時間：" + new Date().toLocaleString("zh-TW");
-  }
 }
 
-// 🚀 初次載入
+function updateUI(data){
+
+setText("cash_buy", data.cash_buy);
+setText("cash_sell", data.cash_sell);
+setText("spot_buy", data.spot_buy);
+setText("spot_sell", data.spot_sell);
+
+document.getElementById("time").innerText =
+"更新時間：" + new Date().toLocaleString();
+
+}
+
+function setText(id, value){
+
+const el = document.getElementById(id);
+if(!el) return;
+
+const old = parseFloat(el.innerText);
+
+el.innerText = value;
+
+// 漲跌顏色
+if(!isNaN(old) && !isNaN(value)){
+    el.style.color = value > old ? "#22c55e" :
+                    value < old ? "#ef4444" : "#fff";
+}
+
+}
+
 load();
 
-// 🔁 每 5 分鐘更新
+// 🔁 改成 5 分鐘更新
 setInterval(load, 5 * 60 * 1000);
