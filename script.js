@@ -1,55 +1,54 @@
 const API = "https://cors.j808vip.workers.dev/";
 
-let lastData = null;
+let lastSpotSell = null;
 
-async function load(){
+async function load() {
 
-const status = document.getElementById("status");
+  const status = document.getElementById("status");
 
-try{
+  try {
 
-const res = await fetch(API);
-const data = await res.json();
+    const res = await fetch(API + "?t=" + Date.now());
+    const data = await res.json();
 
-updateUI(data);
+    updateUI(data);
 
-status.innerText = "更新成功";
+    status.innerText = "更新成功";
 
-}catch(e){
+  } catch (e) {
 
-status.innerText = "錯誤：" + e.message;
+    status.innerText = "錯誤：" + e.message;
 
+  }
 }
 
-}
+function updateUI(data) {
 
-function updateUI(data){
+  const value = data.spot_sell;
 
-setText("cash_buy", data.cash_buy);
-setText("cash_sell", data.cash_sell);
-setText("spot_buy", data.spot_buy);
-setText("spot_sell", data.spot_sell);
+  const el = document.getElementById("spot_sell");
 
-document.getElementById("time").innerText =
-"更新時間：" + new Date().toLocaleString();
+  // 顯示數值
+  el.innerText = value;
 
-}
+  // 漲跌顏色（跟上一筆比）
+  if (lastSpotSell !== null) {
+    if (value > lastSpotSell) {
+      el.style.color = "#22c55e"; // 綠
+    } else if (value < lastSpotSell) {
+      el.style.color = "#ef4444"; // 紅
+    } else {
+      el.style.color = "#fff";
+    }
+  }
 
-function setText(id, value){
+  lastSpotSell = value;
 
-const el = document.getElementById(id);
-
-const old = parseFloat(el.innerText);
-
-el.innerText = value;
-
-// 漲跌顏色
-if(!isNaN(old)){
-    el.style.color = value > old ? "#22c55e" :
-                    value < old ? "#ef4444" : "#fff";
-}
-
+  document.getElementById("time").innerText =
+    "更新時間：" + new Date().toLocaleString("zh-TW");
 }
 
 load();
-setInterval(load, 30000);
+
+// ⏱ 改成 5 分鐘更新
+setInterval(load, 5 * 60 * 1000);
