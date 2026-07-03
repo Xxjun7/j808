@@ -1,0 +1,51 @@
+name: Update BOT Exchange Rate
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"   # 每5分鐘執行一次
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get exchange rate
+        run: |
+          python << 'EOF'
+          import json
+          import urllib.request
+
+          url = "https://www.bot.com.tw/api/Market/Query/ExRate"
+
+          data = json.load(urllib.request.urlopen(url))
+
+          usd = next(x for x in data["data"] if x["curCode"] == "USD")
+
+          result = {
+              "usdSpotSell": float(usd["sSpot"])
+          }
+
+          with open("rate.json", "w", encoding="utf-8") as f:
+              json.dump(result, f, ensure_ascii=False, indent=2)
+
+          print(result)
+          EOF
+
+      - name: Commit
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+
+          git add rate.json
+
+          git diff --cached --quiet || (
+            git commit -m "Update exchange rate"
+            git push
+          )
