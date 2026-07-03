@@ -2,29 +2,24 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>USD 即期賣出</title>
-<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<div class="container">
+<div id="rate">讀取中...</div>
 
-<h1>💵 USD 即期賣出</h1>
+<script>
+async function getUsdSpotSell() {
+    const res = await fetch("https://www.bot.com.tw/api/Market/Query/ExRate");
+    const json = await res.json();
 
-<div id="status">載入中...</div>
+    const usd = json.data.find(item => item.curCode === "USD");
 
-<div class="card">
-  <div class="title">即期賣出</div>
-  <div id="spot_sell" class="value">--</div>
-</div>
+    document.getElementById("rate").textContent = usd.sSpot;
+}
 
-<div id="time"></div>
-
-</div>
-
-<script src="script.js"></script>
+getUsdSpotSell();
+</script>
 
 </body>
 </html>
