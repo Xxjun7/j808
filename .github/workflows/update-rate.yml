@@ -1,9 +1,9 @@
 name: Update BOT Exchange Rate
 
 on:
-  schedule:
-    - cron: "*/5 * * * *"   # 每5分鐘執行一次
   workflow_dispatch:
+  schedule:
+    - cron: "*/5 * * * *"
 
 permissions:
   contents: write
@@ -13,39 +13,36 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Get exchange rate
+      - name: Fetch BOT exchange rate
         run: |
-          python << 'EOF'
-          import json
-          import urllib.request
+          curl -L \
+            -H "User-Agent: Mozilla/5.0" \
+            -H "Accept: application/json" \
+            "https://www.bot.com.tw/api/Market/Query/ExRate" \
+            -o exchange.json
 
-          url = "https://www.bot.com.tw/api/Market/Query/ExRate"
+          echo "=== API Response ==="
+          head -20 exchange.json
 
-          data = json.load(urllib.request.urlopen(url))
+          USD=$(jq -r '.data[] | select(.curCode=="USD") | .sSpot' exchange.json)
 
-          usd = next(x for x in data["data"] if x["curCode"] == "USD")
+          echo "{ \"usdSpotSell\": $USD }" > rate.json
 
-          result = {
-              "usdSpotSell": float(usd["sSpot"])
-          }
+          cat rate.json
 
-          with open("rate.json", "w", encoding="utf-8") as f:
-              json.dump(result, f, ensure_ascii=False, indent=2)
-
-          print(result)
-          EOF
-
-      - name: Commit
+      - name: Commit changes
         run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
 
           git add rate.json
 
-          git diff --cached --quiet || (
-            git commit -m "Update exchange rate"
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "Update USD exchange rate"
             git push
-          )
+          fi
