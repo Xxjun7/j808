@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<title>USD 即期賣出</title>
+    <meta charset="UTF-8">
+    <title>臺銀美元匯率</title>
 </head>
 <body>
 
-<div id="rate">讀取中...</div>
+<h1>USD 即期賣出</h1>
+
+<h2 id="rate">讀取中...</h2>
 
 <script>
-async function getUsdSpotSell() {
-    const res = await fetch("https://www.bot.com.tw/api/Market/Query/ExRate");
-    const json = await res.json();
+async function loadRate() {
 
-    const usd = json.data.find(item => item.curCode === "USD");
+    const data = await fetch("rate.json")
+        .then(r => r.json());
 
-    document.getElementById("rate").textContent = usd.sSpot;
+    document.getElementById("rate").textContent =
+        data.usdSpotSell;
+
 }
 
-getUsdSpotSell();
+loadRate();
 </script>
 
 </body>
