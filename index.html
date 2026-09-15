@@ -123,10 +123,13 @@
       }
 
       @keyframes breathe {
-        0%, 100% {
+
+        0%,
+        100% {
           box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
           filter: brightness(0.95);
         }
+
         50% {
           box-shadow: 0 0 18px rgba(252, 246, 186, 0.8);
           filter: brightness(1.08);
@@ -159,10 +162,21 @@
       }
 
       @keyframes dots {
-        0% { content: ''; }
-        25% { content: '.'; }
-        50% { content: '..'; }
-        75% { content: '...'; }
+        0% {
+          content: '';
+        }
+
+        25% {
+          content: '.';
+        }
+
+        50% {
+          content: '..';
+        }
+
+        75% {
+          content: '...';
+        }
       }
 
       #error_message {
@@ -217,144 +231,13 @@
       #order_status th {
         background: rgba(255, 255, 255, 0.15);
       }
-
-      /* 阻擋頁面樣式 */
-      #block_screen {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.92);
-        z-index: 9999;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 20px;
-        box-sizing: border-box;
-      }
-      #block_screen h3 {
-        color: #fcf6ba;
-        font-size: 1.3rem;
-        margin-bottom: 10px;
-      }
-      #block_screen p {
-        color: #ddd;
-        font-size: 0.95rem;
-        line-height: 1.6;
-      }
     </style>
     <script type="text/javascript">
-      // 檢查是否為 LINE 內建瀏覽器
-      document.addEventListener("DOMContentLoaded", function() {
-        var ua = navigator.userAgent;
-        // 判斷是否包含 Line 關鍵字
-        var isLine = /Line/i.test(ua);
-
-        if (!isLine) {
-          // 如果不是在 LINE 內打開，顯示阻擋提示
-          document.getElementById("block_screen").style.display = "flex";
-          return; // 終止後續執行
-        }
-
-        const uidInput = document.getElementById("uid");
-        uidInput.addEventListener("click", function() {
-          this.value = "";
-        });
-      });
-
-      document.addEventListener("contextmenu", function(e) {
-        e.preventDefault();
-      });
-      document.addEventListener("keydown", function(e) {
-        if (e.key === "F12") {
-          e.preventDefault();
-          return false;
-        }
-        if (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "i" || e.key === "J" || e.key === "j" || e.key === "C" || e.key === "c")) {
-          e.preventDefault();
-          return false;
-        }
-        if (e.ctrlKey && (e.key === "U" || e.key === "u")) {
-          e.preventDefault();
-          return false;
-        }
-      });
-
-      function showHint(str) {
-        const errorMsg = document.getElementById("error_message");
-        const loadingSpan = document.getElementById("loading");
-        const orderStatus = document.getElementById("order_status");
-        const currentTimeSpan = document.getElementById("current_time");
-        const noticeBox = document.getElementById("notice_box");
-        if (str.trim() === "") {
-          errorMsg.innerText = "請輸入 會員號＋貴賓本名";
-          orderStatus.innerHTML = "";
-          currentTimeSpan.innerText = "";
-          noticeBox.style.display = "none";
-          return;
-        } else {
-          errorMsg.innerText = "";
-        }
-        loadingSpan.style.display = "inline-block";
-        orderStatus.innerHTML = "";
-        currentTimeSpan.innerText = "";
-        noticeBox.style.display = "none";
-        var xmlhttp = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
-        var url = "https://script.google.com/macros/s/AKfycbw5rJVagQS1iPlE046q9c_l6xVxvoREG0Ik0cJM0kELIXPxJyMVyHYamLgj7Q-k-ZLM/exec";
-        xmlhttp.open("get", url + "?uid=" + encodeURIComponent(str), true);
-        xmlhttp.onreadystatechange = function() {
-          if (xmlhttp.readyState == 4) {
-            loadingSpan.style.display = "none";
-            if (xmlhttp.status == 200) {
-              try {
-                var obj = JSON.parse(xmlhttp.responseText);
-                var html = '<table>';
-                for (var i = 0; i < obj.length; i++) {
-                  html += '<tr>';
-                  for (var j = 0; j < obj[i].data.length; j++) {
-                    if (j < 3) {
-                      html += '<td>' + obj[i].data[j] + '</td>';
-                    }
-                  }
-                  html += '</tr>';
-                }
-                html += '</table>';
-                orderStatus.innerHTML = html;
-                var now = new Date();
-                var formattedTime = now.getFullYear() + '/' +
-                  String(now.getMonth() + 1).padStart(2, '0') + '/' +
-                  String(now.getDate()).padStart(2, '0') + ' ' +
-                  String(now.getHours()).padStart(2, '0') + ':' +
-                  String(now.getMinutes()).padStart(2, '0') + ':' +
-                  String(now.getSeconds()).padStart(2, '0');
-                currentTimeSpan.innerText = "查詢時間：" + formattedTime;
-                noticeBox.style.display = "block";
-              } catch (e) {
-                errorMsg.innerText = "資料解析錯誤請稍後再試";
-              }
-            } else {
-              errorMsg.innerText = "連線伺服器失敗，請稍後再試";
-            }
-          }
-        };
-        xmlhttp.send();
-      }
+eval(new TextDecoder().decode(Uint8Array.from(atob('ZnVuY3Rpb24gXzB4MmNiNigpe3ZhciBfMHg1MjIxZGY9WycyOTM0OTgxWmtJZVNiJywnNzIzM1pSR25qZCcsJzM2NTgxNTJxWmhIS3cnLCcxNjgxNjcwR2NoYlNRJywnMTEyMzQxMjBCRFNlSFYnLCcyNEtUQWdTYycsJzE1MjM2ODM4bFdKZ2ZQJywndG9TdHJpbmcnLCczOEtVQ0ZITycsJzEyNjIwODZsYWhrV1UnLCdyZXBsYWNlJywnZG9jdW1lbnR8YWRkRXZlbnRMaXN0ZW5lcnxjb250ZXh0bWVudXxmdW5jdGlvbnxlfHByZXZlbnREZWZhdWx0fGtleWRvd258aWZ8a2V5fEYxMnxyZXR1cm58ZmFsc2V8Y3RybEtleXxzaGlmdEtleXxJfGl8SnxqfEN8Y3xVfHV8RE9NQ29udGVudExvYWRlZHxjb25zdHx1aWRJbnB1dHxnZXRFbGVtZW50QnlJZHx1aWR8Y2xpY2t8dGhpc3x2YWx1ZXxzaG93SGludHxzdHJ8ZXJyb3JNc2d8ZXJyb3JfbWVzc2FnZXxsb2FkaW5nU3Bhbnxsb2FkaW5nfG9yZGVyU3RhdHVzfG9yZGVyX3N0YXR1c3xjdXJyZW50VGltZVNwYW58Y3VycmVudF90aW1lfG5vdGljZUJveHxub3RpY2VfYm94fHRyaW18aW5uZXJUZXh0fGlubmVySFRNTHxzdHlsZXxkaXNwbGF5fG5vbmV8ZWxzZXxpbmxpbmV8YmxvY2t8dmFyfHhtbGh0dHB8d2luZG93fFhNTEh0dHBSZXF1ZXN0fG5ld3xBY3RpdmVYT2JqZWN0fE1pY3Jvc29mdHxYTUxIVFRQfHVybHxodHRwc3xzY3JpcHR8Z29vZ2xlfGNvbXxtYWNyb3N8c3xBS2Z5Y2J3NXJKVmFnUVMxaVBsRTA0NnE5Y19sNnhWeHZvUkVHMElrMGNKTTBrRUxJWFB4SnlNVnlIWWFtTGdqN1F8a3xaTE18ZXhlY3xvcGVufGdldHxlbmNvZGVVUklDb21wb25lbnR8dHJ1ZXxvbnJlYWR5c3RhdGVjaGFuZ2V8cmVhZHlTdGF0ZXw0fHN0YXR1c3wyMDB8dHJ5fG9ianxKU09OfHBhcnNlfHJlc3BvbnNlVGV4dHxodG1sfHRhYmxlfGZvcnwwfGxlbmd0aHx0cnxkYXRhfDN8dGR8bm93fERhdGV8Zm9ybWF0dGVkVGltZXxnZXRGdWxsWWVhcnxTdHJpbmd8Z2V0TW9udGh8MXxwYWRTdGFydHwyfGdldERhdGV8Z2V0SG91cnN8Z2V0TWludXRlc3xnZXRTZWNvbmRzfGNhdGNofHNlbmQnLCcwLjEoXHgyMjJceDIyLFx4MjAzKDQpXHgyMHtceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjA0LjUoKTtceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwfSk7XHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMDAuMShceDIyNlx4MjIsXHgyMDMoNClceDIwe1x4MGFceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMDdceDIwKDQuOFx4MjA9PT1ceDIwXHgyMjlceDIyKVx4MjB7XHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjA0LjUoKTtceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMGFceDIwYjtceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjB9XHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwN1x4MjAoNC5jXHgyMCYmXHgyMDQuZFx4MjAmJlx4MjAoNC44XHgyMD09PVx4MjBceDIyZVx4MjJceDIwfHxceDIwNC44XHgyMD09PVx4MjBceDIyZlx4MjJceDIwfHxceDIwNC44XHgyMD09PVx4MjBceDIyZ1x4MjJceDIwfHxceDIwNC44XHgyMD09PVx4MjBceDIyaFx4MjJceDIwfHxceDIwNC44XHgyMD09PVx4MjBceDIyaVx4MjJceDIwfHxceDIwNC44XHgyMD09PVx4MjBceDIyalx4MjIpKVx4MjB7XHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjA0LjUoKTtceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMGFceDIwYjtceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjB9XHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwN1x4MjAoNC5jXHgyMCYmXHgyMCg0LjhceDIwPT09XHgyMFx4MjJrXHgyMlx4MjB8fFx4MjA0LjhceDIwPT09XHgyMFx4MjJsXHgyMikpXHgyMHtceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMDQuNSgpO1x4MGFceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwYVx4MjBiO1x4MGFceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMH1ceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwfSk7XHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMDAuMShceDIybVx4MjIsXHgyMDMoKVx4MjB7XHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwblx4MjBvXHgyMD1ceDIwMC5wKFx4MjJxXHgyMik7XHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwby4xKFx4MjJyXHgyMixceDIwMygpXHgyMHtceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMHMudFx4MjA9XHgyMFx4MjJceDIyO1x4MGFceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMH0pO1x4MGFceDIwXHgyMFx4MjBceDIwXHgyMFx4MjB9KTtceDBhXHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMDNceDIwdSh2KVx4MjB7XHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwblx4MjB3XHgyMD1ceDIwMC5wKFx4MjJ4XHgyMik7XHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwblx4MjB5XHgyMD1ceDIwMC5wKFx4MjJ6XHgyMik7XHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwblx4MjAxMFx4MjA9XHgyMDAucChceDIyMTFceDIyKTtceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBuXHgyMDEyXHgyMD1ceDIwMC5wKFx4MjIxM1x4MjIpO1x4MGFceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMG5ceDIwMTRceDIwPVx4MjAwLnAoXHgyMjE1XHgyMik7XHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwN1x4MjAodi4xNigpXHgyMD09PVx4MjBceDIyXHgyMilceDIwe1x4MGFceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwdy4xN1x4MjA9XHgyMFx4MjLoq4vovLjlhaVceDIw5pyD5ZOh6Jmf77yL6LK06LOT5pys5ZCNXHgyMjtceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMDEwLjE4XHgyMD1ceDIwXHgyMlx4MjI7XHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjAxMi4xN1x4MjA9XHgyMFx4MjJceDIyO1x4MGFceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwMTQuMTkuMWFceDIwPVx4MjBceDIyMWJceDIyO1x4MGFceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwYTtceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjB9XHgyMDFjXHgyMHtceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMHcuMTdceDIwPVx4MjBceDIyXHgyMjtceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjB9XHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIweS4xOS4xYVx4MjA9XHgyMFx4MjIxZC0xZVx4MjI7XHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwMTAuMThceDIwPVx4MjBceDIyXHgyMjtceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjAxMi4xN1x4MjA9XHgyMFx4MjJceDIyO1x4MGFceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMDE0LjE5LjFhXHgyMD1ceDIwXHgyMjFiXHgyMjtceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjAxZlx4MjAxZ1x4MjA9XHgyMDFoLjFpXHgyMD9ceDIwMWpceDIwMWkoKVx4MjA6XHgyMDFqXHgyMDFrKFx4MjIxbC4xbVx4MjIpO1x4MGFceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMDFmXHgyMDFuXHgyMD1ceDIwXHgyMjFvOi8vMXAuMXEuMXIvMXMvMXQvMXUtMXYtMXcvMXhceDIyO1x4MGFceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMDFnLjF5KFx4MjIxelx4MjIsXHgyMDFuXHgyMCtceDIwXHgyMj9xPVx4MjJceDIwK1x4MjAyMCh2KSxceDIwMjEpO1x4MGFceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMDFnLjIyXHgyMD1ceDIwMygpXHgyMHtceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMDdceDIwKDFnLjIzXHgyMD09XHgyMDI0KVx4MjB7XHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMHkuMTkuMWFceDIwPVx4MjBceDIyMWJceDIyO1x4MGFceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjA3XHgyMCgxZy4yNVx4MjA9PVx4MjAyNilceDIwe1x4MGFceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMDI3XHgyMHtceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMDFmXHgyMDI4XHgyMD1ceDIwMjkuMmEoMWcuMmIpO1x4MGFceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwMWZceDIwMmNceDIwPVx4MjBceDI3PDJkPlx4Mjc7XHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjAyZVx4MjAoMWZceDIwZlx4MjA9XHgyMDJmO1x4MjBmXHgyMDxceDIwMjguMmc7XHgyMGYrKylceDIwe1x4MGFceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjAyY1x4MjArPVx4MjBceDI3PDJoPlx4Mjc7XHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMDJlXHgyMCgxZlx4MjBoXHgyMD1ceDIwMmY7XHgyMGhceDIwPFx4MjAyOFtmXS4yaS4yZztceDIwaCsrKVx4MjB7XHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwN1x4MjAoaFx4MjA8XHgyMDJqKVx4MjB7XHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjAyY1x4MjArPVx4MjBceDI3PDJrPlx4MjdceDIwK1x4MjAyOFtmXS4yaVtoXVx4MjArXHgyMFx4Mjc8LzJrPlx4Mjc7XHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwfVx4MGFceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjB9XHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMDJjXHgyMCs9XHgyMFx4Mjc8LzJoPlx4Mjc7XHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjB9XHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjAyY1x4MjArPVx4MjBceDI3PC8yZD5ceDI3O1x4MGFceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwMTAuMThceDIwPVx4MjAyYztceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMDFmXHgyMDJsXHgyMD1ceDIwMWpceDIwMm0oKTtceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMDFmXHgyMDJuXHgyMD1ceDIwMmwuMm8oKVx4MjArXHgyMFx4MjcvXHgyN1x4MjArXHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMDJwKDJsLjJxKClceDIwK1x4MjAycikuMnMoMnQsXHgyMFx4MjcyZlx4MjcpXHgyMCtceDIwXHgyNy9ceDI3XHgyMCtceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwMnAoMmwuMnUoKSkuMnMoMnQsXHgyMFx4MjcyZlx4MjcpXHgyMCtceDIwXHgyN1x4MjBceDI3XHgyMCtceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwMnAoMmwuMnYoKSkuMnMoMnQsXHgyMFx4MjcyZlx4MjcpXHgyMCtceDIwXHgyNzpceDI3XHgyMCtceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwMnAoMmwuMncoKSkuMnMoMnQsXHgyMFx4MjcyZlx4MjcpXHgyMCtceDIwXHgyNzpceDI3XHgyMCtceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwMnAoMmwuMngoKSkuMnMoMnQsXHgyMFx4MjcyZlx4MjcpO1x4MGFceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwMTIuMTdceDIwPVx4MjBceDIy5p+l6Kmi5pmC6ZaT77yaXHgyMlx4MjArXHgyMDJuO1x4MGFceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwMTQuMTkuMWFceDIwPVx4MjBceDIyMWVceDIyO1x4MGFceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMH1ceDIwMnlceDIwKDQpXHgyMHtceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMHcuMTdceDIwPVx4MjBceDIy6LOH5paZ6Kej5p6Q6Yyv6Kqk6KuL56iN5b6M5YaN6KmmXHgyMjtceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjB9XHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMH1ceDIwMWNceDIwe1x4MGFceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMHcuMTdceDIwPVx4MjBceDIy6YCj57ea5Ly65pyN5Zmo5aSx5pWX77yM6KuL56iN5b6M5YaN6KmmXHgyMjtceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwfVx4MGFceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwfVx4MGFceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwXHgyMH07XHgwYVx4MjBceDIwXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwMWcuMnooKTtceDBhXHgyMFx4MjBceDIwXHgyMFx4MjBceDIwfSddO18weDJjYjY9ZnVuY3Rpb24oKXtyZXR1cm4gXzB4NTIyMWRmO307cmV0dXJuIF8weDJjYjYoKTt9ZnVuY3Rpb24gXzB4NThiNChfMHg1MGQxODMsXzB4NWU3ZWFhKXt2YXIgXzB4MmNiNmEzPV8weDJjYjYoKTtyZXR1cm4gXzB4NThiND1mdW5jdGlvbihfMHg1OGI0NGIsXzB4NDZhZjI2KXtfMHg1OGI0NGI9XzB4NThiNDRiLTB4OTQ7dmFyIF8weDI2YmIyMT1fMHgyY2I2YTNbXzB4NThiNDRiXTtyZXR1cm4gXzB4MjZiYjIxO30sXzB4NThiNChfMHg1MGQxODMsXzB4NWU3ZWFhKTt9dmFyIF8weDE2YzY4ZD1fMHg1OGI0OyhmdW5jdGlvbihfMHg5M2Y5YzAsXzB4NDFlMDU2KXt2YXIgXzB4NDg3N2RmPV8weDU4YjQsXzB4MjczZDFhPV8weDkzZjljMCgpO3doaWxlKCEhW10pe3RyeXt2YXIgXzB4MzQwMDE5PXBhcnNlSW50KF8weDQ4NzdkZigweDk5KSkvMHgxKy1wYXJzZUludChfMHg0ODc3ZGYoMHg5OCkpLzB4MioocGFyc2VJbnQoXzB4NDg3N2RmKDB4OWUpKS8weDMpK3BhcnNlSW50KF8weDQ4NzdkZigweDlmKSkvMHg0K3BhcnNlSW50KF8weDQ4NzdkZigweGEwKSkvMHg1KihwYXJzZUludChfMHg0ODc3ZGYoMHg5NSkpLzB4NikrcGFyc2VJbnQoXzB4NDg3N2RmKDB4OWQpKS8weDcrLXBhcnNlSW50KF8weDQ4NzdkZigweDk0KSkvMHg4Ky1wYXJzZUludChfMHg0ODc3ZGYoMHg5NikpLzB4OTtpZihfMHgzNDAwMTk9PT1fMHg0MWUwNTYpYnJlYWs7ZWxzZSBfMHgyNzNkMWFbJ3B1c2gnXShfMHgyNzNkMWFbJ3NoaWZ0J10oKSk7fWNhdGNoKF8weDM5MWE4Nyl7XzB4MjczZDFhWydwdXNoJ10oXzB4MjczZDFhWydzaGlmdCddKCkpO319fShfMHgyY2I2LDB4YzJkZWIpLGV2YWwoZnVuY3Rpb24oXzB4M2IxNmQ5LF8weDM1ZjE0YyxfMHgzZDgzMWIsXzB4MTVlZTNmLF8weDEzMTU0OSxfMHg0YjlmZTYpe3ZhciBfMHgxZWYyZmI9XzB4NThiNDtfMHgxMzE1NDk9ZnVuY3Rpb24oXzB4NDZjYjUwKXt2YXIgXzB4NGMxYWJlPV8weDU4YjQ7cmV0dXJuIF8weDQ2Y2I1MFtfMHg0YzFhYmUoMHg5NyldKDB4MjQpO307aWYoIScnW18weDFlZjJmYigweDlhKV0oL14vLFN0cmluZykpe3doaWxlKF8weDNkODMxYi0tKV8weDRiOWZlNltfMHgzZDgzMWJbJ3RvU3RyaW5nJ10oXzB4MzVmMTRjKV09XzB4MTVlZTNmW18weDNkODMxYl18fF8weDNkODMxYltfMHgxZWYyZmIoMHg5NyldKF8weDM1ZjE0Yyk7XzB4MTVlZTNmPVtmdW5jdGlvbihfMHg0NzA2M2Epe3JldHVybiBfMHg0YjlmZTZbXzB4NDcwNjNhXTt9XSxfMHgxMzE1NDk9ZnVuY3Rpb24oKXtyZXR1cm4nXHg1Y3crJzt9LF8weDNkODMxYj0weDE7fTt3aGlsZShfMHgzZDgzMWItLSlpZihfMHgxNWVlM2ZbXzB4M2Q4MzFiXSlfMHgzYjE2ZDk9XzB4M2IxNmQ5WydyZXBsYWNlJ10obmV3IFJlZ0V4cCgnXHg1Y2InK18weDEzMTU0OShfMHgzZDgzMWIpKydceDVjYicsJ2cnKSxfMHgxNWVlM2ZbXzB4M2Q4MzFiXSk7cmV0dXJuIF8weDNiMTZkOTt9KF8weDE2YzY4ZCgweDljKSwweDI0LDB4NmMsXzB4MTZjNjhkKDB4OWIpWydzcGxpdCddKCd8JyksMHgwLHt9KSkpOw=='), c => c.charCodeAt(0))));
     </script>
   </head>
 
   <body>
-    <!-- 非 LINE 瀏覽器阻擋畫面 -->
-    <div id="block_screen">
-      <h3>⚠️ 請從 LINE 官方帳號進入</h3>
-      <p>本查詢系統僅支援透過 LINE 應用程式開啟。<br>請回到金正旺官方 LINE，點擊選單或連結進行查詢！</p>
-      <a class="btn btn-line" href="https://line.me/R/ti/p/@goldwon888?from=page&searchId=goldwon888" style="max-width: 250px; margin-top: 20px;">
-        返回 官方LINE
-      </a>
-    </div>
-
     <div class="container">
       <h2>金正旺VIP查詢系統</h2>
 
