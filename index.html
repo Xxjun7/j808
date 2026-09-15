@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="./Jicon.ico">
+    <meta property="og:title" content="金正旺">
+    <meta property="og:description" content="VIP查詢系統">
+
+    <title>金正旺VIP查詢系統</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        color: #ffffff;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        box-sizing: border-box;
+        background-image: url('https://lh3.googleusercontent.com/pw/AP1GczPMHaF7waxnhrEtXYsPAGS6rVI4LxOdwlTZwmrjZmMuYytOLZV1Z59x6T03KM39kRaRI1h8qe2ZpUzOTbBIS8rwn30KfhEk_cLEY8MuQutCF30OUACklEM7qO-478-XV1hYBzubTndfAkdo7_hOMf8L=w728-h1024-s-no-gm?authuser=0');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 500px;
+        background: rgba(0, 0, 0, 0.65);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 24px;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+        box-sizing: border-box;
+      }
+
+      h2 {
+        font-size: 1.4rem;
+        margin-top: 0;
+        margin-bottom: 20px;
+        text-align: center;
+        letter-spacing: 1.5px;
+        font-weight: bold;
+        background: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+        background-size: 200% auto;
+        color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+        animation: shine 3s linear infinite;
+        text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+      }
+
+      @keyframes shine {
+        to {
+          background-position: 200% center;
+        }
+      }
+
+      .input-group {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+
+      input[type="text"] {
+        flex: 1;
+        padding: 10px 12px;
+        font-size: 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+        border-radius: 8px;
+        outline: none;
+        transition: border-color 0.2s, background 0.2s;
+      }
+
+      input[type="text"]::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      input[type="text"]:focus {
+        border-color: #fcf6ba;
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      button,
+      .btn {
+        padding: 10px 16px;
+        font-size: 1rem;
+        font-weight: 500;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: transform 0.1s;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+      }
+
+      button:active,
+      .btn:active {
+        transform: scale(0.98);
+      }
+
+      .btn-query {
+        background: linear-gradient(135deg, #bf953f, #fcf6ba, #aa771c);
+        color: #222222;
+        font-weight: bold;
+        box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+        animation: breathe 2.5s ease-in-out infinite;
+      }
+
+      .btn-query:hover {
+        background: linear-gradient(135deg, #d4af37, #fff8dc, #c5a059);
+        box-shadow: 0 0 20px rgba(252, 246, 186, 0.8);
+      }
+
+      @keyframes breathe {
+        0%, 100% {
+          box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+          filter: brightness(0.95);
+        }
+        50% {
+          box-shadow: 0 0 18px rgba(252, 246, 186, 0.8);
+          filter: brightness(1.08);
+        }
+      }
+
+      .btn-line {
+        background-color: #00c300;
+        color: #ffffff;
+        width: 100%;
+        box-sizing: border-box;
+        margin-top: 16px;
+      }
+
+      .btn-line:hover {
+        background-color: #00b000;
+      }
+
+      .loading {
+        display: none;
+        font-size: 0.95rem;
+        color: #fcf6ba;
+        margin-top: 8px;
+      }
+
+      .loading::after {
+        content: '';
+        display: inline-block;
+        animation: dots 1.5s infinite steps(4, end);
+      }
+
+      @keyframes dots {
+        0% { content: ''; }
+        25% { content: '.'; }
+        50% { content: '..'; }
+        75% { content: '...'; }
+      }
+
+      #error_message {
+        color: #ff6b6b;
+        font-size: 0.9rem;
+        margin-top: 4px;
+        display: block;
+      }
+
+      #current_time {
+        display: block;
+        margin-top: 16px;
+        font-size: 0.9rem;
+        background-image: linear-gradient(to right, #ee9ca7, #ffdde1);
+        -webkit-background-clip: text;
+        color: transparent;
+        font-weight: bold;
+      }
+
+      .notice-box {
+        margin-top: 12px;
+        padding: 10px 12px;
+        background: rgba(255, 255, 255, 0.08);
+        border-left: 3px solid #fcf6ba;
+        border-radius: 4px;
+        font-size: 0.88rem;
+        line-height: 1.5;
+        color: #fceea7;
+      }
+
+      #order_status {
+        width: 100%;
+        margin-top: 16px;
+      }
+
+      #order_status table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 8px;
+      }
+
+      #order_status th,
+      #order_status td {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 8px;
+        text-align: center;
+        font-size: 0.95rem;
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      #order_status th {
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      /* 阻擋頁面樣式 */
+      #block_screen {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.92);
+        z-index: 9999;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+      #block_screen h3 {
+        color: #fcf6ba;
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+      }
+      #block_screen p {
+        color: #ddd;
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+    </style>
+    <script type="text/javascript">
+      // 檢查是否為 LINE 內建瀏覽器
+      document.addEventListener("DOMContentLoaded", function() {
+        var ua = navigator.userAgent;
+        // 判斷是否包含 Line 關鍵字
+        var isLine = /Line/i.test(ua);
+
+        if (!isLine) {
+          // 如果不是在 LINE 內打開，顯示阻擋提示
+          document.getElementById("block_screen").style.display = "flex";
+          return; // 終止後續執行
+        }
+
+        const uidInput = document.getElementById("uid");
+        uidInput.addEventListener("click", function() {
+          this.value = "";
+        });
+      });
+
+      document.addEventListener("contextmenu", function(e) {
+        e.preventDefault();
+      });
+      document.addEventListener("keydown", function(e) {
+        if (e.key === "F12") {
+          e.preventDefault();
+          return false;
+        }
+        if (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "i" || e.key === "J" || e.key === "j" || e.key === "C" || e.key === "c")) {
+          e.preventDefault();
+          return false;
+        }
+        if (e.ctrlKey && (e.key === "U" || e.key === "u")) {
+          e.preventDefault();
+          return false;
+        }
+      });
+
+      function showHint(str) {
+        const errorMsg = document.getElementById("error_message");
+        const loadingSpan = document.getElementById("loading");
+        const orderStatus = document.getElementById("order_status");
+        const currentTimeSpan = document.getElementById("current_time");
+        const noticeBox = document.getElementById("notice_box");
+        if (str.trim() === "") {
+          errorMsg.innerText = "請輸入 會員號＋貴賓本名";
+          orderStatus.innerHTML = "";
+          currentTimeSpan.innerText = "";
+          noticeBox.style.display = "none";
+          return;
+        } else {
+          errorMsg.innerText = "";
+        }
+        loadingSpan.style.display = "inline-block";
+        orderStatus.innerHTML = "";
+        currentTimeSpan.innerText = "";
+        noticeBox.style.display = "none";
+        var xmlhttp = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+        var url = "https://script.google.com/macros/s/AKfycbw5rJVagQS1iPlE046q9c_l6xVxvoREG0Ik0cJM0kELIXPxJyMVyHYamLgj7Q-k-ZLM/exec";
+        xmlhttp.open("get", url + "?uid=" + encodeURIComponent(str), true);
+        xmlhttp.onreadystatechange = function() {
+          if (xmlhttp.readyState == 4) {
+            loadingSpan.style.display = "none";
+            if (xmlhttp.status == 200) {
+              try {
+                var obj = JSON.parse(xmlhttp.responseText);
+                var html = '<table>';
+                for (var i = 0; i < obj.length; i++) {
+                  html += '<tr>';
+                  for (var j = 0; j < obj[i].data.length; j++) {
+                    if (j < 3) {
+                      html += '<td>' + obj[i].data[j] + '</td>';
+                    }
+                  }
+                  html += '</tr>';
+                }
+                html += '</table>';
+                orderStatus.innerHTML = html;
+                var now = new Date();
+                var formattedTime = now.getFullYear() + '/' +
+                  String(now.getMonth() + 1).padStart(2, '0') + '/' +
+                  String(now.getDate()).padStart(2, '0') + ' ' +
+                  String(now.getHours()).padStart(2, '0') + ':' +
+                  String(now.getMinutes()).padStart(2, '0') + ':' +
+                  String(now.getSeconds()).padStart(2, '0');
+                currentTimeSpan.innerText = "查詢時間：" + formattedTime;
+                noticeBox.style.display = "block";
+              } catch (e) {
+                errorMsg.innerText = "資料解析錯誤請稍後再試";
+              }
+            } else {
+              errorMsg.innerText = "連線伺服器失敗，請稍後再試";
+            }
+          }
+        };
+        xmlhttp.send();
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- 非 LINE 瀏覽器阻擋畫面 -->
+    <div id="block_screen">
+      <h3>⚠️ 請從 LINE 官方帳號進入</h3>
+      <p>本查詢系統僅支援透過 LINE 應用程式開啟。<br>請回到金正旺官方 LINE，點擊選單或連結進行查詢！</p>
+      <a class="btn btn-line" href="https://line.me/R/ti/p/@goldwon888?from=page&searchId=goldwon888" style="max-width: 250px; margin-top: 20px;">
+        返回 官方LINE
+      </a>
+    </div>
+
+    <div class="container">
+      <h2>金正旺VIP查詢系統</h2>
+
+      <div class="input-group">
+        <input type="text" id="uid" placeholder="請輸入 會號+貴賓本名" />
+        <button class="btn btn-query" onclick="showHint(document.getElementById('uid').value);">查詢</button>
+      </div>
+
+      <span id="loading" class="loading">讀取中</span>
+      <span id="error_message"></span>
+
+      <div id="order_status"></div>
+      <span id="current_time"></span>
+
+      <div id="notice_box" class="notice-box" style="display: none;">
+        🔔 貼心提醒：<br>
+        當日消費之點數，將於【隔日】統一入點唷～
+      </div>
+
+      <a class="btn btn-line" href="https://line.me/R/ti/p/@goldwon888?from=page&searchId=goldwon888" target="_blank">
+        返回 官方LINE
+      </a>
+    </div>
+  </body>
+
+</html>
