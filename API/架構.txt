@@ -1,0 +1,27 @@
+前台
+ ↓
+/j808/API/J.json
+ ↓
+取得當月 GAS API
+ ↓
+API_READY = true
+ ↓
+warmup=true
+ ↓
+GAS 預熱成功
+ ↓
+會員輸入
+ ↓
+uid=會員號＋本名
+ ↓
+GAS
+ ↓
+搜尋「會員」工作表 G 欄
+ ↓
+找到同一列
+ ↓
+讀 C 欄點數
+ ↓
+JSON 回前台
+ ↓
+顯示目前點數
