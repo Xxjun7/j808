@@ -1,22 +1,19 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-<head>
+  <head>
     <meta charset="UTF-8" />
 
-<!-- 防止手機畫面縮放 -->
-<meta name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
 
-<link rel="icon" type="image/x-icon" href="./Jicon.ico">
+    <link rel="icon" type="image/x-icon" href="./Jicon.ico">
 
-<!-- 控制 LINE 預覽顯示的文字 -->
-<meta property="og:title" content="金正旺">
-<meta property="og:description" content="VIP查詢系統">
+    <meta property="og:title" content="金正旺">
+    <meta property="og:description" content="VIP查詢系統">
 
-<title>金正旺VIP查詢系統</title>
+    <title>金正旺VIP查詢系統</title>
 
-<style>
-    body {
+    <style>
+      body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         color: #ffffff;
         margin: 0;
@@ -28,27 +25,19 @@
         min-height: 100vh;
         min-height: 100dvh;
         box-sizing: border-box;
-
-        /* 防止 iPhone 瀏覽器手勢造成整頁縮放 */
         touch-action: pan-x pan-y;
-
-        /* 防止點擊或觸發時被框選文字 */
         -webkit-user-select: none;
         user-select: none;
-
-        /* 設定最底層背景圖 */
         background-image: url('https://lh3.googleusercontent.com/pw/AP1GczPMHaF7waxnhrEtXYsPAGS6rVI4LxOdwlTZwmrjZmMuYytOLZV1Z59x6T03KM39kRaRI1h8qe2ZpUzOTbBIS8rwn30KfhEk_cLEY8MuQutCF30OUACklEM7qO-478-XV1hYBzubTndfAkdo7_hOMf8L=w728-h1024-s-no-gm?authuser=0');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
         background-attachment: fixed;
-    }
+      }
 
-    .container {
+      .container {
         width: 100%;
         max-width: 500px;
-
-        /* 黑透玻璃面板風格 */
         background: rgba(0, 0, 0, 0.65);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
@@ -57,45 +46,38 @@
         border-radius: 16px;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
         box-sizing: border-box;
-
-        /* 防止容器被 Safari 手勢影響 */
         touch-action: manipulation;
-    }
+      }
 
-    /* 亮金色動態閃亮標題 */
-    h2 {
+      h2 {
         font-size: 1.4rem;
         margin-top: 0;
         margin-bottom: 20px;
         text-align: center;
         letter-spacing: 1.5px;
         font-weight: bold;
-
-        /* 金色漸層背景 */
         background: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
         background-size: 200% auto;
         color: transparent;
         -webkit-background-clip: text;
         background-clip: text;
-
-        /* 套用動態閃爍動畫 */
         animation: shine 3s linear infinite;
         text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
-    }
+      }
 
-    @keyframes shine {
+      @keyframes shine {
         to {
-            background-position: 200% center;
+          background-position: 200% center;
         }
-    }
+      }
 
-    .input-group {
+      .input-group {
         display: flex;
         gap: 8px;
         margin-bottom: 12px;
-    }
+      }
 
-    input[type="text"] {
+      input[type="text"] {
         flex: 1;
         padding: 12px;
         font-size: 16px;
@@ -106,26 +88,22 @@
         outline: none;
         transition: border-color 0.2s, background 0.2s;
         -webkit-appearance: none;
-
-        /* 輸入框維持可以點擊選取文字輸入 */
         -webkit-user-select: text;
         user-select: text;
-
-        /* 防止 iPhone 點擊輸入框時自動放大 */
         touch-action: manipulation;
-    }
+      }
 
-    input[type="text"]::placeholder {
+      input[type="text"]::placeholder {
         color: rgba(255, 255, 255, 0.6);
-    }
+      }
 
-    input[type="text"]:focus {
+      input[type="text"]:focus {
         border-color: #fcf6ba;
         background: rgba(255, 255, 255, 0.15);
-    }
+      }
 
-    button,
-    .btn {
+      button,
+      .btn {
         padding: 12px 16px;
         font-size: 1rem;
         font-weight: 500;
@@ -135,97 +113,93 @@
         text-decoration: none;
         display: inline-block;
         text-align: center;
-
-        /* 解決手機點擊按鈕放大或雙擊觸發縮放的問題 */
         touch-action: manipulation;
-    }
+      }
 
-    button:active,
-    .btn:active {
+      button:active,
+      .btn:active {
         transform: scale(0.98);
-    }
+      }
 
-    /* 亮金色呼吸燈查詢按鈕 */
-    .btn-query {
+      .btn-query {
         background: linear-gradient(135deg, #bf953f, #fcf6ba, #aa771c);
         color: #222222;
         font-weight: bold;
         box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
         animation: breathe 2.5s ease-in-out infinite;
-    }
+      }
 
-    .btn-query:hover {
+      .btn-query:hover {
         background: linear-gradient(135deg, #d4af37, #fff8dc, #c5a059);
         box-shadow: 0 0 20px rgba(252, 246, 186, 0.8);
-    }
+      }
 
-    @keyframes breathe {
+      @keyframes breathe {
+
         0%,
         100% {
-            box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
-            filter: brightness(0.95);
+          box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+          filter: brightness(0.95);
         }
 
         50% {
-            box-shadow: 0 0 18px rgba(252, 246, 186, 0.8);
-            filter: brightness(1.08);
+          box-shadow: 0 0 18px rgba(252, 246, 186, 0.8);
+          filter: brightness(1.08);
         }
-    }
+      }
 
-    /* LINE 按鈕改為靠左自適應寬度 */
-    .btn-line {
+      .btn-line {
         background-color: #00c300;
         color: #ffffff;
         width: auto;
         box-sizing: border-box;
         margin-top: 16px;
         display: inline-block;
-    }
+      }
 
-    .btn-line:hover {
+      .btn-line:hover {
         background-color: #00b000;
-    }
+      }
 
-    /* 動態讀取中樣式 */
-    .loading {
+      .loading {
         display: none;
         font-size: 0.95rem;
         color: #fcf6ba;
         margin-top: 8px;
-    }
+      }
 
-    .loading::after {
+      .loading::after {
         content: '';
         display: inline-block;
         animation: dots 1.5s infinite steps(4, end);
-    }
+      }
 
-    @keyframes dots {
+      @keyframes dots {
         0% {
-            content: '';
+          content: '';
         }
 
         25% {
-            content: '.';
+          content: '.';
         }
 
         50% {
-            content: '..';
+          content: '..';
         }
 
         75% {
-            content: '...';
+          content: '...';
         }
-    }
+      }
 
-    #error_message {
+      #error_message {
         color: #ff6b6b;
         font-size: 0.9rem;
         margin-top: 4px;
         display: block;
-    }
+      }
 
-    #current_time {
+      #current_time {
         display: block;
         margin-top: 16px;
         font-size: 0.9rem;
@@ -233,10 +207,9 @@
         -webkit-background-clip: text;
         color: transparent;
         font-weight: bold;
-    }
+      }
 
-    /* 貼心提醒文字樣式 */
-    .notice-box {
+      .notice-box {
         margin-top: 12px;
         padding: 10px 12px;
         background: rgba(255, 255, 255, 0.08);
@@ -245,37 +218,35 @@
         font-size: 0.88rem;
         line-height: 1.5;
         color: #fceea7;
-    }
+      }
 
-    /* 表格樣式（配合黑透玻璃） */
-    #order_status {
+      #order_status {
         width: 100%;
         margin-top: 16px;
         overflow-x: auto;
-    }
+      }
 
-    #order_status table {
+      #order_status table {
         width: 100%;
         border-collapse: collapse;
         margin-top: 8px;
-    }
+      }
 
-    #order_status th,
-    #order_status td {
+      #order_status th,
+      #order_status td {
         border: 1px solid rgba(255, 255, 255, 0.2);
         padding: 8px;
         text-align: center;
         font-size: 0.95rem;
         color: #ffffff;
         background: rgba(255, 255, 255, 0.05);
-    }
+      }
 
-    #order_status th {
+      #order_status th {
         background: rgba(255, 255, 255, 0.15);
-    }
+      }
 
-    /* 版權宣告樣式 */
-    .copyright {
+      .copyright {
         position: fixed;
         bottom: 8px;
         right: 12px;
@@ -284,410 +255,258 @@
         letter-spacing: 0.5px;
         pointer-events: none;
         z-index: 999;
-    }
-</style>
+      }
+    </style>
 
-<script type="text/javascript">
-
-    // ----------------------------------------
-    // 1. 禁止右鍵選單
-    // ----------------------------------------
-    document.addEventListener("contextmenu", function (e) {
+    <script type="text/javascript">
+      document.addEventListener("contextmenu", function(e) {
         e.preventDefault();
-    });
-
-    // ----------------------------------------
-    // 2. 禁止常用查看原始碼與開發者工具快捷鍵
-    // ----------------------------------------
-    document.addEventListener("keydown", function (e) {
-
+      });
+      document.addEventListener("keydown", function(e) {
         if (e.key === "F12") {
-            e.preventDefault();
-            return false;
+          e.preventDefault();
+          return false;
         }
-
         if (
-            e.ctrlKey &&
-            e.shiftKey &&
-            (
-                e.key === "I" ||
-                e.key === "i" ||
-                e.key === "J" ||
-                e.key === "j" ||
-                e.key === "C" ||
-                e.key === "c"
-            )
+          e.ctrlKey &&
+          e.shiftKey &&
+          (
+            e.key === "I" ||
+            e.key === "i" ||
+            e.key === "J" ||
+            e.key === "j" ||
+            e.key === "C" ||
+            e.key === "c"
+          )
         ) {
-            e.preventDefault();
-            return false;
+          e.preventDefault();
+          return false;
         }
-
         if (e.ctrlKey && (e.key === "U" || e.key === "u")) {
-            e.preventDefault();
-            return false;
+          e.preventDefault();
+          return false;
         }
-    });
-
-    // ----------------------------------------
-    // 3. iPhone / Safari 禁止雙指縮放
-    // ----------------------------------------
-    document.addEventListener("gesturestart", function (e) {
+      });
+      document.addEventListener("gesturestart", function(e) {
         e.preventDefault();
-    }, { passive: false });
-
-    document.addEventListener("gesturechange", function (e) {
+      }, { passive: false });
+      document.addEventListener("gesturechange", function(e) {
         e.preventDefault();
-    }, { passive: false });
-
-    document.addEventListener("gestureend", function (e) {
+      }, { passive: false });
+      document.addEventListener("gestureend", function(e) {
         e.preventDefault();
-    }, { passive: false });
-
-    // ----------------------------------------
-    // 4. 禁止多指觸控造成頁面縮放
-    // ----------------------------------------
-    document.addEventListener("touchmove", function (e) {
-
+      }, { passive: false });
+      document.addEventListener("touchmove", function(e) {
         if (e.touches && e.touches.length > 1) {
-            e.preventDefault();
+          e.preventDefault();
         }
-
-    }, { passive: false });
-
-    // ----------------------------------------
-    // 5. 防止雙擊縮放
-    // ----------------------------------------
-    let lastTouchEnd = 0;
-
-    document.addEventListener("touchend", function (e) {
-
+      }, { passive: false });
+      let lastTouchEnd = 0;
+      document.addEventListener("touchend", function(e) {
         const now = Date.now();
-
         if (now - lastTouchEnd <= 300) {
-            e.preventDefault();
+          e.preventDefault();
         }
-
         lastTouchEnd = now;
-
-    }, { passive: false });
-
-    // ----------------------------------------
-    // 6. 進入頁面立即預熱 API 與點擊清空內容
-    // ----------------------------------------
-    document.addEventListener("DOMContentLoaded", function () {
-
+      }, { passive: false });
+      document.addEventListener("DOMContentLoaded", function() {
         const uidInput = document.getElementById("uid");
-
-        uidInput.addEventListener("click", function () {
-            this.value = "";
+        uidInput.addEventListener("click", function() {
+          this.value = "";
         });
-
-        // 進入頁面就立即在背景預熱 API
         fetch("/j808/API/J.json?v=" + Date.now(), { cache: "no-store" })
-            .then(response => response.json())
-            .then(config => {
-                if (config && config.apiUrl) {
-                    fetch(config.apiUrl.trim() + "?warmup=true", { method: "GET", mode: "no-cors" })
-                        .catch(() => {});
-                }
-            })
-            .catch(() => {});
-
-    });
-
-    // ----------------------------------------
-    // 7. 查詢功能
-    // ----------------------------------------
-    async function showHint(str) {
-
+          .then(response => response.json())
+          .then(config => {
+            if (config && config.apiUrl) {
+              fetch(config.apiUrl.trim() + "?warmup=true", { method: "GET", mode: "no-cors" })
+                .catch(() => {});
+            }
+          })
+          .catch(() => {});
+      });
+      async function showHint(str) {
         const errorMsg = document.getElementById("error_message");
         const loadingSpan = document.getElementById("loading");
         const orderStatus = document.getElementById("order_status");
         const currentTimeSpan = document.getElementById("current_time");
         const noticeBox = document.getElementById("notice_box");
-
-        // ----------------------------------------
-        // 檢查輸入內容
-        // ----------------------------------------
         str = str.trim();
-
         if (str === "") {
-
-            errorMsg.innerText = "請輸入 會員號＋貴賓本名";
-            orderStatus.innerHTML = "";
-            currentTimeSpan.innerText = "";
-            noticeBox.style.display = "none";
-
-            return;
+          errorMsg.innerText = "請輸入 會員號＋貴賓本名";
+          orderStatus.innerHTML = "";
+          currentTimeSpan.innerText = "";
+          noticeBox.style.display = "none";
+          return;
         }
-
         errorMsg.innerText = "";
-
         loadingSpan.style.display = "inline-block";
         orderStatus.innerHTML = "";
         currentTimeSpan.innerText = "";
         noticeBox.style.display = "none";
-
         try {
-
-            // ----------------------------------------
-            // 先讀取 API/J.json
-            // ----------------------------------------
-            // 使用時間參數避免瀏覽器快取舊的 GAS 網址
-            const configResponse = await fetch(
-                "/j808/API/J.json?v=" + Date.now(),
-                {
-                    method: "GET",
-                    cache: "no-store"
-                }
-            );
-
-            if (!configResponse.ok) {
-                throw new Error("API_CONFIG_LOAD_ERROR");
+          const configResponse = await fetch(
+            "/j808/API/J.json?v=" + Date.now(), {
+              method: "GET",
+              cache: "no-store"
             }
-
-            const config = await configResponse.json();
-
-            // ----------------------------------------
-            // 檢查 apiUrl 是否存在
-            // ----------------------------------------
-            if (
-                !config ||
-                typeof config.apiUrl !== "string" ||
-                config.apiUrl.trim() === ""
-            ) {
-                throw new Error("API_CONFIG_INVALID");
-            }
-
-            const apiUrl = config.apiUrl.trim();
-
-            // ----------------------------------------
-            // 建立 GAS 查詢網址
-            // ----------------------------------------
-            const separator = apiUrl.indexOf("?") === -1 ? "?" : "&";
-
-            const requestUrl =
-                apiUrl +
-                separator +
-                "uid=" +
-                encodeURIComponent(str);
-
-            // ----------------------------------------
-            // 使用 XMLHttpRequest 呼叫 GAS
-            // ----------------------------------------
-            var xmlhttp = window.XMLHttpRequest
-                ? new XMLHttpRequest()
-                : new ActiveXObject("Microsoft.XMLHTTP");
-
-            xmlhttp.open(
-                "get",
-                requestUrl,
-                true
-            );
-
-            xmlhttp.onreadystatechange = function () {
-
-                if (xmlhttp.readyState == 4) {
-
-                    loadingSpan.style.display = "none";
-
-                    if (xmlhttp.status == 200) {
-
-                        try {
-
-                            var obj = JSON.parse(xmlhttp.responseText);
-
-                            var html = '<table>';
-
-                            for (var i = 0; i < obj.length; i++) {
-
-                                html += '<tr>';
-
-                                if (
-                                    obj[i] &&
-                                    Array.isArray(obj[i].data)
-                                ) {
-
-                                    for (
-                                        var j = 0;
-                                        j < obj[i].data.length;
-                                        j++
-                                    ) {
-
-                                        if (j < 3) {
-
-                                            html +=
-                                                '<td>' +
-                                                obj[i].data[j] +
-                                                '</td>';
-
-                                        }
-
-                                    }
-
-                                }
-
-                                html += '</tr>';
-                            }
-
-                            html += '</table>';
-
-                            orderStatus.innerHTML = html;
-
-                            // ----------------------------------------
-                            // 顯示查詢時間
-                            // ----------------------------------------
-                            var now = new Date();
-
-                            var formattedTime =
-                                now.getFullYear() + '/' +
-                                String(now.getMonth() + 1).padStart(2, '0') + '/' +
-                                String(now.getDate()).padStart(2, '0') + ' ' +
-                                String(now.getHours()).padStart(2, '0') + ':' +
-                                String(now.getMinutes()).padStart(2, '0') + ':' +
-                                String(now.getSeconds()).padStart(2, '0');
-
-                            currentTimeSpan.innerText =
-                                "查詢時間：" + formattedTime;
-
-                            // ----------------------------------------
-                            // 顯示貼心提醒
-                            // ----------------------------------------
-                            noticeBox.style.display = "block";
-
-                        } catch (e) {
-
-                            console.error(
-                                "GAS 回傳資料解析錯誤：",
-                                e
-                            );
-
-                            errorMsg.innerText =
-                                "資料解析錯誤請稍後再試";
-
-                            orderStatus.innerHTML = "";
-                            currentTimeSpan.innerText = "";
-                            noticeBox.style.display = "none";
-
+          );
+          if (!configResponse.ok) {
+            throw new Error("API_CONFIG_LOAD_ERROR");
+          }
+          const config = await configResponse.json();
+          if (
+            !config ||
+            typeof config.apiUrl !== "string" ||
+            config.apiUrl.trim() === ""
+          ) {
+            throw new Error("API_CONFIG_INVALID");
+          }
+          const apiUrl = config.apiUrl.trim();
+          const separator = apiUrl.indexOf("?") === -1 ? "?" : "&";
+          const requestUrl =
+            apiUrl +
+            separator +
+            "uid=" +
+            encodeURIComponent(str);
+          var xmlhttp = window.XMLHttpRequest ?
+            new XMLHttpRequest() :
+            new ActiveXObject("Microsoft.XMLHTTP");
+          xmlhttp.open(
+            "get",
+            requestUrl,
+            true
+          );
+          xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4) {
+              loadingSpan.style.display = "none";
+              if (xmlhttp.status == 200) {
+                try {
+                  var obj = JSON.parse(xmlhttp.responseText);
+                  var html = '<table>';
+                  for (var i = 0; i < obj.length; i++) {
+                    html += '<tr>';
+                    if (
+                      obj[i] &&
+                      Array.isArray(obj[i].data)
+                    ) {
+                      for (
+                        var j = 0; j < obj[i].data.length; j++
+                      ) {
+                        if (j < 3) {
+                          html +=
+                            '<td>' +
+                            obj[i].data[j] +
+                            '</td>';
                         }
-
-                    } else {
-
-                        errorMsg.innerText =
-                            "連線伺服器失敗，請稍後再試";
-
-                        orderStatus.innerHTML = "";
-                        currentTimeSpan.innerText = "";
-                        noticeBox.style.display = "none";
-
+                      }
                     }
+                    html += '</tr>';
+                  }
+                  html += '</table>';
+                  orderStatus.innerHTML = html;
+                  var now = new Date();
+                  var formattedTime =
+                    now.getFullYear() + '/' +
+                    String(now.getMonth() + 1).padStart(2, '0') + '/' +
+                    String(now.getDate()).padStart(2, '0') + ' ' +
+                    String(now.getHours()).padStart(2, '0') + ':' +
+                    String(now.getMinutes()).padStart(2, '0') + ':' +
+                    String(now.getSeconds()).padStart(2, '0');
+                  currentTimeSpan.innerText =
+                    "查詢時間：" + formattedTime;
+                  noticeBox.style.display = "block";
+                } catch (e) {
+                  console.error(
+                    "GAS 回傳資料解析錯誤：",
+                    e
+                  );
+                  errorMsg.innerText =
+                    "資料解析錯誤請稍後再試";
+                  orderStatus.innerHTML = "";
+                  currentTimeSpan.innerText = "";
+                  noticeBox.style.display = "none";
                 }
-            };
-
-            xmlhttp.onerror = function () {
-
-                loadingSpan.style.display = "none";
-
+              } else {
                 errorMsg.innerText =
-                    "連線伺服器失敗，請稍後再試";
-
+                  "連線伺服器失敗，請稍後再試";
                 orderStatus.innerHTML = "";
                 currentTimeSpan.innerText = "";
                 noticeBox.style.display = "none";
-            };
-
-            xmlhttp.send();
-
-        } catch (error) {
-
-            console.error(
-                "API 設定讀取錯誤：",
-                error
-            );
-
-            loadingSpan.style.display = "none";
-
-            if (error.message === "API_CONFIG_LOAD_ERROR") {
-
-                errorMsg.innerText =
-                    "無法讀取 API 設定，請稍後再試";
-
-            } else if (error.message === "API_CONFIG_INVALID") {
-
-                errorMsg.innerText =
-                    "API 設定錯誤，請聯絡管理員";
-
-            } else {
-
-                errorMsg.innerText =
-                    "系統連線錯誤，請稍後再試";
-
+              }
             }
-
+          };
+          xmlhttp.onerror = function() {
+            loadingSpan.style.display = "none";
+            errorMsg.innerText =
+              "連線伺服器失敗，請稍後再試";
             orderStatus.innerHTML = "";
             currentTimeSpan.innerText = "";
             noticeBox.style.display = "none";
+          };
+          xmlhttp.send();
+        } catch (error) {
+          console.error(
+            "API 讀取錯誤：",
+            error
+          );
+          loadingSpan.style.display = "none";
+          if (error.message === "API_CONFIG_LOAD_ERROR") {
+            errorMsg.innerText =
+              "無法讀取 API ，請稍後再試";
+          } else if (error.message === "API_CONFIG_INVALID") {
+            errorMsg.innerText =
+              "API維護中，請詢問客服人員";
+          } else {
+            errorMsg.innerText =
+              "系統連線錯誤，請稍後再試";
+          }
+          orderStatus.innerHTML = "";
+          currentTimeSpan.innerText = "";
+          noticeBox.style.display = "none";
         }
-    }
+      }
+    </script>
 
-</script>
+  </head>
 
-</head>
+  <body>
 
-<body>
+    <div class="container">
 
-<div class="container">
+      <h2>金正旺VIP查詢系統</h2>
 
-    <h2>金正旺VIP查詢系統</h2>
+      <div class="input-group">
 
-    <div class="input-group">
+        <input type="text" id="uid" placeholder="請輸入 會號+貴賓本名" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
 
-        <input
-            type="text"
-            id="uid"
-            placeholder="請輸入 會號+貴賓本名"
-            autocomplete="off"
-            autocorrect="off"
-            autocapitalize="off"
-            spellcheck="false"
-        />
-
-        <button
-            class="btn btn-query"
-            onclick="showHint(document.getElementById('uid').value);"
-        >
-            查詢
+        <button class="btn btn-query" onclick="showHint(document.getElementById('uid').value);">
+          查詢
         </button>
 
-    </div>
+      </div>
 
-    <span id="loading" class="loading">讀取中</span>
+      <span id="loading" class="loading">讀取中</span>
 
-    <span id="error_message"></span>
+      <span id="error_message"></span>
 
-    <div id="order_status"></div>
+      <div id="order_status"></div>
 
-    <span id="current_time"></span>
+      <span id="current_time"></span>
 
-    <!-- 貼心提醒文字說明 (初始隱藏，查詢成功後顯示) -->
-    <div id="notice_box" class="notice-box" style="display: none;">
+      <div id="notice_box" class="notice-box" style="display: none;">
 
         🔔 貼心提醒：<br>
         當日消費之點數，將於【隔日】統一入點唷～
 
+      </div>
+
+      <a class="btn btn-line" href="https://line.me/R/ti/p/@goldwon888?from=page&searchId=goldwon888" target="_blank">
+        返回 官方LINE
+      </a>
+
     </div>
 
-    <a
-        class="btn btn-line"
-        href="https://line.me/R/ti/p/@goldwon888?from=page&searchId=goldwon888"
-        target="_blank"
-    >
-        返回 官方LINE
-    </a>
+    <div class="copyright">Copyright © 2026 ｊLINE: jimi102</div>
 
-</div>
-
-<div class="copyright">Copyright © 2026 ｊLINE: jimi102</div>
-
-</body>
+  </body>
 </html>
