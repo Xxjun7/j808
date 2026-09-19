@@ -1,0 +1,4477 @@
+<!DOCTYPE html>
+
+<html lang="zh-TW">
+
+<head>
+
+  <meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover"
+>
+
+  <link rel="icon" type="image/x-icon" href="./Jicon.ico">
+
+  <meta property="og:title" content="金正旺">
+  <meta property="og:description" content="VIP查詢系統">
+
+  <title>金正旺VIP查詢系統</title>
+
+  <style>
+
+    /* ========================================
+       基本
+       ======================================== */
+
+    * {
+      box-sizing: border-box;
+    }
+
+
+    body {
+
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
+
+      color: #ffffff;
+
+      margin: 0;
+      padding: 16px;
+
+      display: flex;
+      flex-direction: column;
+
+      align-items: center;
+      justify-content: center;
+
+      min-height: 100vh;
+      min-height: 100dvh;
+
+      touch-action: pan-x pan-y;
+
+      -webkit-user-select: none;
+      user-select: none;
+
+      background-image:
+        url('https://lh3.googleusercontent.com/pw/AP1GczPMHaF7waxnhrEtXYsPAGS6rVI4LxOdwlTZwmrjZmMuYytOLZV1Z59x6T03KM39kRaRI1h8qe2ZpUzOTbBIS8rwn30KfhEk_cLEY8MuQutCF30OUACklEM7qO-478-XV1hYBzubTndfAkdo7_hOMf8L=w728-h1024-s-no-gm?authuser=0');
+
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+
+    /* ========================================
+       主容器
+       ======================================== */
+
+    .container {
+
+      width: 100%;
+      max-width: 500px;
+
+      background: rgba(0, 0, 0, 0.65);
+
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.15);
+
+      padding: 20px;
+
+      border-radius: 16px;
+
+      box-shadow:
+        0 8px 32px
+        rgba(0, 0, 0, 0.37);
+
+      touch-action: manipulation;
+    }
+
+
+    /* ========================================
+       標題
+       ======================================== */
+
+    h2 {
+
+      font-size: 1.4rem;
+
+      margin-top: 0;
+      margin-bottom: 20px;
+
+      text-align: center;
+
+      letter-spacing: 1.5px;
+
+      font-weight: bold;
+
+      background:
+        linear-gradient(
+          90deg,
+          #bf953f,
+          #fcf6ba,
+          #b38728,
+          #fbf5b7,
+          #aa771c
+        );
+
+      background-size: 200% auto;
+
+      color: transparent;
+
+      -webkit-background-clip: text;
+      background-clip: text;
+
+      animation:
+        shine 3s linear infinite;
+
+      text-shadow:
+        0 0 15px
+        rgba(212, 175, 55, 0.4);
+    }
+
+
+    @keyframes shine {
+
+      to {
+        background-position: 200% center;
+      }
+
+    }
+
+
+    /* ========================================
+       輸入區
+       ======================================== */
+
+    .input-group {
+
+      display: flex;
+
+      gap: 8px;
+
+      margin-bottom: 12px;
+    }
+
+
+    input[type="text"] {
+
+      flex: 1;
+
+      min-width: 0;
+
+      padding: 12px;
+
+      font-size: 16px;
+
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.3);
+
+      background:
+        rgba(255, 255, 255, 0.1);
+
+      color: #ffffff;
+
+      border-radius: 8px;
+
+      outline: none;
+
+      -webkit-appearance: none;
+
+      -webkit-user-select: text;
+      user-select: text;
+
+      touch-action: manipulation;
+    }
+
+
+    input[type="text"]::placeholder {
+
+      color:
+        rgba(255, 255, 255, 0.6);
+    }
+
+
+    input[type="text"]:focus {
+
+      border-color:
+        #fcf6ba;
+
+      background:
+        rgba(255, 255, 255, 0.15);
+    }
+
+
+    /* ========================================
+       按鈕
+       ======================================== */
+
+    button,
+    .btn {
+
+      padding: 12px 16px;
+
+      font-size: 1rem;
+
+      font-weight: 500;
+
+      border: none;
+
+      border-radius: 8px;
+
+      cursor: pointer;
+
+      text-decoration: none;
+
+      display: inline-block;
+
+      text-align: center;
+
+      touch-action: manipulation;
+    }
+
+
+    button:active,
+    .btn:active {
+
+      transform: scale(0.98);
+    }
+
+
+    button:disabled,
+    .btn:disabled {
+
+      cursor: not-allowed;
+
+      opacity: 0.6;
+
+      filter: grayscale(30%);
+
+      pointer-events: none;
+    }
+
+
+    /* ========================================
+       查詢按鈕
+       ======================================== */
+
+    .btn-query {
+
+      background:
+        linear-gradient(
+          135deg,
+          #bf953f,
+          #fcf6ba,
+          #aa771c
+        );
+
+      color: #222222;
+
+      font-weight: bold;
+
+      box-shadow:
+        0 0 10px
+        rgba(212, 175, 55, 0.4);
+
+      animation:
+        breathe 2.5s ease-in-out infinite;
+    }
+
+
+    .btn-query:disabled {
+
+      cursor: not-allowed;
+
+      opacity: 0.6;
+
+      filter: grayscale(30%);
+
+      pointer-events: none;
+    }
+
+
+    @keyframes breathe {
+
+      0%,
+      100% {
+
+        box-shadow:
+          0 0 5px
+          rgba(212, 175, 55, 0.3);
+
+        filter: brightness(0.95);
+      }
+
+      50% {
+
+        box-shadow:
+          0 0 18px
+          rgba(252, 246, 186, 0.8);
+
+        filter: brightness(1.08);
+      }
+
+    }
+
+
+    /* ========================================
+       Loading
+       ======================================== */
+
+    .loading {
+
+      display: none;
+
+      font-size: 0.95rem;
+
+      color: #fcf6ba;
+
+      margin-top: 8px;
+    }
+
+
+    .loading::after {
+
+      content: '';
+
+      display: inline-block;
+
+      animation:
+        dots 1.5s infinite
+        steps(4, end);
+    }
+
+
+    @keyframes dots {
+
+      0% {
+        content: '';
+      }
+
+      25% {
+        content: '.';
+      }
+
+      50% {
+        content: '..';
+      }
+
+      75% {
+        content: '...';
+      }
+
+    }
+
+
+    /* ========================================
+       錯誤
+       ======================================== */
+
+    #error_message {
+
+      color: #ff6b6b;
+
+      font-size: 0.9rem;
+
+      margin-top: 4px;
+
+      display: block;
+    }
+
+
+    /* ========================================
+       查詢時間
+       ======================================== */
+
+    #current_time {
+
+      display: block;
+
+      margin-top: 16px;
+
+      font-size: 0.9rem;
+
+      background-image:
+        linear-gradient(
+          to right,
+          #ee9ca7,
+          #ffdde1
+        );
+
+      -webkit-background-clip: text;
+
+      color: transparent;
+
+      font-weight: bold;
+    }
+
+
+    /* ========================================
+       提醒
+       ======================================== */
+
+    .notice-box {
+
+      margin-top: 12px;
+
+      padding: 10px 12px;
+
+      background:
+        rgba(255, 255, 255, 0.08);
+
+      border-left:
+        3px solid
+        #fcf6ba;
+
+      border-radius: 4px;
+
+      font-size: 0.88rem;
+
+      line-height: 1.5;
+
+      color: #fceea7;
+    }
+
+
+    /* ========================================
+       查詢結果
+       ======================================== */
+
+    #order_status {
+
+      width: 100%;
+
+      margin-top: 16px;
+
+      overflow-x: auto;
+    }
+
+
+    #order_status table {
+
+      width: 100%;
+
+      border-collapse: collapse;
+
+      margin-top: 8px;
+    }
+
+
+    #order_status th,
+    #order_status td {
+
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.2);
+
+      padding: 8px;
+
+      text-align: center;
+
+      font-size: 0.95rem;
+
+      color: #ffffff;
+
+      background:
+        rgba(255, 255, 255, 0.05);
+    }
+
+
+    #order_status th {
+
+      background:
+        rgba(255, 255, 255, 0.15);
+    }
+
+
+    /* ========================================
+       兌換按鈕
+       ======================================== */
+
+    #reward_button_area {
+
+      display: none;
+
+      margin-top: 14px;
+
+      text-align: center;
+    }
+
+
+    .btn-reward {
+
+      width: 100%;
+
+      background:
+       linear-gradient(
+        135deg,
+        #bf953f,
+        #fcf6ba,
+        #aa771c
+       );
+
+      color: #222222;
+
+      font-weight: bold;
+
+      box-shadow:
+        0 0 10px
+        rgba(212, 175, 55, 0.4);
+
+      animation:
+        breathe 2.5s ease-in-out infinite;
+    }
+
+
+    .btn-reward:disabled {
+
+      cursor: not-allowed;
+
+      opacity: 0.6;
+
+      filter: grayscale(30%);
+
+      pointer-events: none;
+
+      animation: none;
+
+      box-shadow: none;
+    }
+
+
+    /* ========================================
+       獎品讀取狀態
+       ======================================== */
+
+    .reward-ready-text {
+
+      display: block;
+
+      margin-top: 6px;
+
+      font-size: 0.78rem;
+
+      color:
+        rgba(255, 255, 255, 0.55);
+    }
+
+
+    .reward-ready-text.ready {
+
+      color: #8ff0a4;
+    }
+
+
+    .reward-ready-text.error {
+
+      color: #ff8b8b;
+    }
+
+
+    /* ========================================
+       LINE
+       ======================================== */
+
+    .btn-line {
+
+      background-color:
+        #00c300;
+
+      color: #ffffff;
+
+      margin-top: 16px;
+    }
+
+
+    .btn-line:hover {
+
+      background-color:
+        #00b000;
+    }
+
+
+    /* ========================================
+       Modal
+       ======================================== */
+
+    #reward_modal {
+
+      display: none;
+
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 5000;
+
+      background:
+        rgba(0, 0, 0, 0.78);
+
+      padding: 18px;
+
+      align-items: center;
+
+      justify-content: center;
+    }
+
+
+    .reward-panel {
+
+      width: 100%;
+
+      max-width: 450px;
+
+      max-height: 90vh;
+
+      overflow-y: auto;
+
+      background:
+        rgba(20, 20, 20, 0.98);
+
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.18);
+
+      border-radius: 18px;
+
+      padding: 20px;
+
+      box-shadow:
+        0 15px 45px
+        rgba(0, 0, 0, 0.65);
+    }
+
+
+    /* ========================================
+       Modal 標題
+       ======================================== */
+
+    .reward-title {
+
+      text-align: center;
+
+      font-size: 1.3rem;
+
+      font-weight: bold;
+
+      color: #fcf6ba;
+
+      margin-bottom: 18px;
+    }
+
+
+    /* ========================================
+       選擇品項文字
+       ======================================== */
+
+    .reward-label {
+
+      color: #ffffff;
+
+      font-size: 0.95rem;
+
+      margin-bottom: 8px;
+
+      line-height: 1.5;
+    }
+
+
+    .reward-label span {
+
+      color: #fcf6ba;
+
+      font-size: 0.85rem;
+    }
+
+
+    /* ========================================
+       下拉選單
+       ======================================== */
+
+    #reward_select {
+
+      width: 100%;
+
+      padding: 13px 12px;
+
+      font-size: 16px;
+
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.25);
+
+      border-radius: 10px;
+
+      background:
+        rgba(255, 255, 255, 0.08);
+
+      color: #ffffff;
+
+      outline: none;
+
+      margin-bottom: 16px;
+    }
+
+
+    #reward_select option {
+
+      background: #222222;
+
+      color: #ffffff;
+    }
+
+
+    #reward_select option.reward-category {
+
+      color: #fcf6ba;
+
+      font-weight: bold;
+
+      background: #151515;
+    }
+
+
+    /* ========================================
+       已選品項
+       ======================================== */
+
+    .selected-title {
+
+      color: #fcf6ba;
+
+      font-weight: bold;
+
+      font-size: 0.98rem;
+
+      margin-bottom: 8px;
+    }
+
+
+    #selectedItemsBox {
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 8px;
+
+      min-height: 10px;
+    }
+
+
+    .selected-empty {
+
+      color:
+        rgba(255, 255, 255, 0.5);
+
+      font-size: 0.88rem;
+
+      padding: 10px;
+
+      border-radius: 8px;
+
+      background:
+        rgba(255, 255, 255, 0.05);
+
+      text-align: center;
+    }
+
+
+    /* ========================================
+       已選品項列
+       ======================================== */
+
+    .selected-item {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 8px;
+
+      padding: 10px;
+
+      border-radius: 10px;
+
+      background:
+        rgba(255, 255, 255, 0.07);
+
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.12);
+    }
+
+
+    .selected-item-name {
+
+      flex: 1;
+
+      min-width: 0;
+
+      color: #ffffff;
+
+      font-size: 0.92rem;
+
+      word-break: break-word;
+    }
+
+
+    /* ========================================
+       數量控制
+       ======================================== */
+
+    .quantity-control {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 5px;
+
+      flex-shrink: 0;
+    }
+
+
+    .quantity-btn {
+
+      width: 30px;
+
+      height: 30px;
+
+      padding: 0;
+
+      border-radius: 7px;
+
+      background:
+        rgba(212, 175, 55, 0.22);
+
+      color: #fcf6ba;
+
+      border:
+        1px solid
+        rgba(252, 246, 186, 0.35);
+
+      font-size: 1.1rem;
+
+      font-weight: bold;
+
+      line-height: 30px;
+    }
+
+
+    .quantity-number {
+
+      min-width: 28px;
+
+      text-align: center;
+
+      color: #ffffff;
+
+      font-weight: bold;
+
+      font-size: 0.95rem;
+    }
+
+
+    /* ========================================
+       刪除
+       ======================================== */
+
+    .remove-item {
+
+      width: 30px;
+
+      height: 30px;
+
+      padding: 0;
+
+      border-radius: 7px;
+
+      background:
+        rgba(255, 80, 80, 0.15);
+
+      color: #ff8b8b;
+
+      font-size: 0.95rem;
+
+      flex-shrink: 0;
+    }
+
+
+    /* ========================================
+       點數計算
+       ======================================== */
+
+    .points-box {
+
+      margin-top: 16px;
+
+      padding: 12px 14px;
+
+      border-radius: 12px;
+
+      background:
+        rgba(255, 255, 255, 0.06);
+
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.12);
+
+      line-height: 1.6;
+    }
+
+
+    .points-title {
+
+      color: #fcf6ba;
+
+      font-size: 0.95rem;
+
+      font-weight: bold;
+
+      margin-bottom: 5px;
+    }
+
+
+    #points_calculation {
+
+      color: #ffffff;
+
+      font-size: 0.92rem;
+
+      word-break: break-word;
+    }
+
+
+    #points_calculation.insufficient {
+
+      color: #ff8b8b;
+
+      font-weight: bold;
+    }
+
+
+    #points_calculation.sufficient {
+
+      color: #8ff0a4;
+
+      font-weight: bold;
+    }
+
+
+    /* ========================================
+       即時預覽
+       ======================================== */
+
+    .preview-box {
+
+      margin-top: 16px;
+
+      padding: 14px;
+
+      border-radius: 12px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(212, 175, 55, 0.12),
+          rgba(255, 255, 255, 0.05)
+        );
+
+      border:
+        1px solid
+        rgba(212, 175, 55, 0.25);
+    }
+
+
+    .preview-title {
+
+      color: #fcf6ba;
+
+      font-size: 0.98rem;
+
+      font-weight: bold;
+
+      margin-bottom: 10px;
+    }
+
+
+    #reward_preview {
+
+      white-space: pre-line;
+
+      color: #ffffff;
+
+      font-size: 0.9rem;
+
+      line-height: 1.65;
+
+      word-break: break-word;
+    }
+
+
+    /* ========================================
+       Modal 按鈕
+       ======================================== */
+
+    .reward-actions {
+
+      display: flex;
+
+      gap: 8px;
+
+      margin-top: 18px;
+    }
+
+
+    .reward-actions button {
+
+      flex: 1;
+
+      min-width: 0;
+    }
+
+
+    .btn-close-reward {
+
+      background:
+        rgba(255, 255, 255, 0.12);
+
+      color: #ffffff;
+    }
+
+
+    /* ========================================
+       分享給官方 LINE@
+       ======================================== */
+
+    .btn-send-line {
+
+      background:
+        #00c300;
+
+      color: #ffffff;
+
+      font-weight: bold;
+
+      box-shadow:
+        0 0 10px
+        rgba(0, 195, 0, 0.25);
+    }
+
+
+    .btn-send-line:disabled {
+
+      opacity: 0.4;
+
+      cursor: not-allowed;
+
+      box-shadow: none;
+    }
+
+
+    /* ========================================
+       Loading / Error
+       ======================================== */
+
+    .reward-loading {
+
+      text-align: center;
+
+      color: #fcf6ba;
+
+      padding: 20px 0;
+    }
+    
+        .reward-error {
+
+      text-align: center;
+
+      color: #ff6b6b;
+
+      padding: 10px 0;
+    }
+
+
+    /* ========================================
+       Copyright
+       ======================================== */
+
+    .copyright {
+
+      position: fixed;
+
+      bottom: 8px;
+
+      right: 12px;
+
+      font-size: 0.75rem;
+
+      color:
+        rgba(255, 255, 255, 0.5);
+
+      letter-spacing: 0.5px;
+
+      pointer-events: none;
+
+      z-index: 999;
+    }
+
+
+    /* ========================================
+       手機
+       ======================================== */
+
+    @media (max-width: 420px) {
+
+      .reward-panel {
+
+        padding: 16px;
+      }
+
+
+      .selected-item {
+
+        flex-wrap: wrap;
+      }
+
+
+      .selected-item-name {
+
+        width: 100%;
+
+        flex-basis: 100%;
+      }
+
+    }
+
+  </style>
+
+  <script>
+
+    // ========================================
+    // 官方 LINE@
+    // ========================================
+
+    const OFFICIAL_LINE_URL =
+      "https://line.me/R/ti/p/@goldwon888";
+
+
+    // ========================================
+    // 全域 API
+    // ========================================
+
+    let API_URL = "";
+
+    let API_READY = false;
+
+
+    // ========================================
+    // 目前會員
+    // ========================================
+
+    let CURRENT_UID = "";
+
+    let CURRENT_POINTS = "";
+
+
+    // ========================================
+    // 兌換按鈕目前是否正在處理
+    //
+    // ★ 防止連點
+    // ★ 點擊後直到點數同步完成前
+    // ★ 絕對不能再次執行
+    // ========================================
+
+    let REWARD_OPENING = false;
+
+
+    // ========================================
+    // 獎品快取
+    // ========================================
+
+    let REWARDS_CACHE = [];
+
+    let REWARDS_LOADING_PROMISE = null;
+
+    let REWARDS_READY = false;
+
+    let REWARDS_ERROR = "";
+
+
+    // ========================================
+    // 多選獎品
+    // ========================================
+
+    let SELECTED_REWARDS = {};
+
+
+    // ========================================
+    // 判斷是否為分類分界線
+    // ========================================
+
+    function isRewardCategory(
+      reward
+    ) {
+
+      const value =
+        String(
+          reward || ""
+        ).trim();
+
+
+      if (
+        value === ""
+      ) {
+
+        return false;
+
+      }
+
+
+      return /^-{2,}.+-{2,}$/.test(
+        value
+      );
+
+    }
+
+
+    // ========================================
+    // 取得獎品點數
+    // ========================================
+
+    function getRewardPoints(
+      reward
+    ) {
+
+      const text =
+        String(
+          reward || ""
+        );
+
+
+      const match =
+        text.match(
+          /(\d+(?:\.\d+)?)\s*點/
+        );
+
+
+      if (
+        !match
+      ) {
+
+        return null;
+
+      }
+
+
+      return Number(
+        match[1]
+      );
+
+    }
+
+
+    // ========================================
+    // 取得目前點數
+    // ========================================
+
+    function getCurrentPointsNumber() {
+
+      const points =
+        Number(
+          String(
+            CURRENT_POINTS
+          )
+          .replace(
+            /,/g,
+            ""
+          )
+        );
+
+
+      if (
+        Number.isFinite(points)
+      ) {
+
+        return points;
+
+      }
+
+
+      return 0;
+
+    }
+
+
+    // ========================================
+    // 計算已選獎品總點數
+    // ========================================
+
+    function calculateRewardPoints() {
+
+      let total =
+        0;
+
+
+      let hasInvalidPrice =
+        false;
+
+
+      Object.keys(
+        SELECTED_REWARDS
+      ).forEach(
+        function(reward) {
+
+          if (
+            isRewardCategory(
+              reward
+            )
+          ) {
+
+            return;
+
+          }
+
+
+          const price =
+            getRewardPoints(
+              reward
+            );
+
+
+          const quantity =
+            Number(
+              SELECTED_REWARDS[
+                reward
+              ]
+            ) || 0;
+
+
+          if (
+            price === null
+          ) {
+
+            hasInvalidPrice =
+              true;
+
+            return;
+
+          }
+
+
+          total +=
+            price *
+            quantity;
+
+        }
+      );
+
+
+      return {
+        total: total,
+        hasInvalidPrice: hasInvalidPrice
+      };
+
+    }
+
+
+    // ========================================
+    // 產生點數扣除算式
+    // ========================================
+
+    function buildPointsCalculation() {
+
+      const rewards =
+        Object.keys(
+          SELECTED_REWARDS
+        ).filter(
+          function(reward) {
+
+            return !isRewardCategory(
+              reward
+            );
+
+          }
+        );
+
+
+      const currentPoints =
+        getCurrentPointsNumber();
+
+
+      if (
+        rewards.length === 0
+      ) {
+
+        return {
+          text:
+            String(
+              currentPoints
+            ),
+
+          insufficient:
+            false,
+
+          hasInvalidPrice:
+            false
+        };
+
+      }
+
+
+      const calculation =
+        calculateRewardPoints();
+
+
+      if (
+        calculation.hasInvalidPrice
+      ) {
+
+        return {
+          text:
+            "部分獎品點數資料錯誤",
+
+          insufficient:
+            true,
+
+          hasInvalidPrice:
+            true
+        };
+
+      }
+
+
+      const deductions =
+        [];
+
+
+      rewards.forEach(
+        function(reward) {
+
+          const price =
+            getRewardPoints(
+              reward
+            );
+
+
+          const quantity =
+            Number(
+              SELECTED_REWARDS[
+                reward
+              ]
+            ) || 0;
+
+
+          for (
+            let i = 0;
+            i < quantity;
+            i++
+          ) {
+
+            deductions.push(
+              String(
+                price
+              )
+            );
+
+          }
+
+        }
+      );
+
+
+      const remaining =
+        currentPoints -
+        calculation.total;
+
+
+      const expression =
+        String(
+          currentPoints
+        ) +
+        (
+          deductions.length > 0
+            ? " - " +
+              deductions.join(
+                " - "
+              )
+            : ""
+        );
+
+
+      if (
+        remaining < 0
+      ) {
+
+        return {
+          text:
+            expression +
+            " = 點數不足",
+
+          insufficient:
+            true,
+
+          hasInvalidPrice:
+            false
+        };
+
+      }
+
+
+      return {
+        text:
+          expression +
+          " = " +
+          remaining,
+
+        insufficient:
+          false,
+
+        hasInvalidPrice:
+          false
+      };
+
+    }
+
+
+    // ========================================
+    // 是否可以分享
+    // ========================================
+
+    function canSendReward() {
+
+      const rewards =
+        Object.keys(
+          SELECTED_REWARDS
+        ).filter(
+          function(reward) {
+
+            return !isRewardCategory(
+              reward
+            );
+
+          }
+        );
+
+
+      if (
+        !CURRENT_UID ||
+        rewards.length === 0
+      ) {
+
+        return false;
+
+      }
+
+
+      const calculation =
+        calculateRewardPoints();
+
+
+      if (
+        calculation.hasInvalidPrice
+      ) {
+
+        return false;
+
+      }
+
+
+      const currentPoints =
+        getCurrentPointsNumber();
+
+
+      if (
+        calculation.total >
+        currentPoints
+      ) {
+
+        return false;
+
+      }
+
+
+      return true;
+
+    }
+
+
+    // ========================================
+    // 更新分享按鈕狀態
+    // ========================================
+
+    function updateSendButtonState() {
+
+      const sendButton =
+        document.getElementById(
+          "send_line_button"
+        );
+
+
+      if (
+        !sendButton
+      ) {
+
+        return;
+
+      }
+
+
+      if (
+        sendButton.dataset.mode ===
+        "return-line"
+      ) {
+
+        sendButton.disabled =
+          false;
+
+        return;
+
+      }
+
+
+      sendButton.disabled =
+        !canSendReward();
+
+    }
+
+
+    // ========================================
+    // ★ 更新「兌換獎品」按鈕狀態
+    //
+    // disabled = true
+    // 代表正在同步點數 / 讀取獎品
+    //
+    // disabled = false
+    // 代表目前可以重新點擊
+    // ========================================
+
+    function setRewardButtonDisabled(
+      disabled
+    ) {
+
+      const rewardButton =
+        document.querySelector(
+          ".btn-reward"
+        );
+
+
+      if (
+        !rewardButton
+      ) {
+
+        return;
+
+      }
+
+
+      rewardButton.disabled =
+        disabled;
+
+
+      if (
+        disabled
+      ) {
+
+        rewardButton.setAttribute(
+          "aria-disabled",
+          "true"
+        );
+
+      } else {
+
+        rewardButton.removeAttribute(
+          "aria-disabled"
+        );
+
+      }
+
+    }
+
+
+    // ========================================
+    // 防止右鍵
+    // ========================================
+
+    document.addEventListener(
+      "contextmenu",
+      function(e) {
+
+        e.preventDefault();
+
+      }
+    );
+
+
+    // ========================================
+    // 防止快捷鍵
+    // ========================================
+
+    document.addEventListener(
+      "keydown",
+      function(e) {
+
+        if (e.key === "F12") {
+
+          e.preventDefault();
+
+          return false;
+
+        }
+
+
+        if (
+          e.ctrlKey &&
+          e.shiftKey &&
+          (
+            e.key === "I" ||
+            e.key === "i" ||
+            e.key === "J" ||
+            e.key === "j" ||
+            e.key === "C" ||
+            e.key === "c"
+          )
+        ) {
+
+          e.preventDefault();
+
+          return false;
+
+        }
+
+
+        if (
+          e.ctrlKey &&
+          (
+            e.key === "U" ||
+            e.key === "u"
+          )
+        ) {
+
+          e.preventDefault();
+
+          return false;
+
+        }
+
+      }
+    );
+
+
+    // ========================================
+    // 防止手機縮放
+    // ========================================
+
+    document.addEventListener(
+      "gesturestart",
+      function(e) {
+
+        e.preventDefault();
+
+      },
+      {
+        passive: false
+      }
+    );
+
+
+    document.addEventListener(
+      "gesturechange",
+      function(e) {
+
+        e.preventDefault();
+
+      },
+      {
+        passive: false
+      }
+    );
+
+
+    document.addEventListener(
+      "gestureend",
+      function(e) {
+
+        e.preventDefault();
+
+      },
+      {
+        passive: false
+      }
+    );
+
+
+    document.addEventListener(
+      "touchmove",
+      function(e) {
+
+        if (
+          e.touches &&
+          e.touches.length > 1
+        ) {
+
+          e.preventDefault();
+
+        }
+
+      },
+      {
+        passive: false
+      }
+    );
+
+
+    // ========================================
+    // 防止雙擊放大
+    // ========================================
+
+    let lastTouchEnd = 0;
+
+
+    document.addEventListener(
+      "touchend",
+      function(e) {
+
+        const now =
+          Date.now();
+
+
+        if (
+          now - lastTouchEnd <= 300
+        ) {
+
+          e.preventDefault();
+
+        }
+
+
+        lastTouchEnd = now;
+
+      },
+      {
+        passive: false
+      }
+    );
+
+
+    // ========================================
+    // DOM 完成
+    // ========================================
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      function() {
+
+        const uidInput =
+          document.getElementById("uid");
+
+
+        if (uidInput) {
+
+          uidInput.addEventListener(
+            "click",
+            function() {
+
+              this.value = "";
+
+            }
+          );
+
+        }
+
+
+        document.addEventListener(
+          "keydown",
+          function(e) {
+
+            if (
+              e.key === "Escape"
+            ) {
+
+              closeRewardModal();
+
+            }
+
+          }
+        );
+
+      }
+    );
+
+
+    // ========================================
+    // 讀取 API 設定
+    // ========================================
+
+    async function getApiUrl() {
+
+      if (
+        API_URL
+      ) {
+
+        return API_URL;
+
+      }
+
+
+      const configResponse =
+        await fetch(
+          "/j808/API/J.json?v=" +
+          Date.now(),
+          {
+            method: "GET",
+            cache: "no-store"
+          }
+        );
+
+
+      if (
+        !configResponse.ok
+      ) {
+
+        throw new Error(
+          "API_CONFIG_LOAD_ERROR"
+        );
+
+      }
+
+
+      const config =
+        await configResponse.json();
+
+
+      if (
+        !config ||
+        typeof config.apiUrl !== "string" ||
+        config.apiUrl.trim() === ""
+      ) {
+
+        throw new Error(
+          "API_CONFIG_INVALID"
+        );
+
+      }
+
+
+      API_URL =
+        config.apiUrl.trim();
+
+
+      return API_URL;
+
+    }
+
+
+    // ========================================
+    // 讀取獎品
+    // ========================================
+
+    async function preloadRewards() {
+
+      if (
+        REWARDS_READY
+      ) {
+
+        return REWARDS_CACHE;
+
+      }
+
+
+      if (
+        REWARDS_LOADING_PROMISE
+      ) {
+
+        return REWARDS_LOADING_PROMISE;
+
+      }
+
+
+      REWARDS_ERROR =
+        "";
+
+
+      REWARDS_LOADING_PROMISE =
+        (async function() {
+
+          try {
+
+            const apiUrl =
+              await getApiUrl();
+
+
+            const separator =
+              apiUrl.indexOf("?") === -1
+                ? "?"
+                : "&";
+
+
+            const rewardUrl =
+              apiUrl +
+              separator +
+              "action=rewards";
+
+
+            const response =
+              await fetch(
+                rewardUrl,
+                {
+                  method: "GET",
+                  cache: "no-store"
+                }
+              );
+
+
+            if (
+              !response.ok
+            ) {
+
+              throw new Error(
+                "REWARD_REQUEST_ERROR"
+              );
+
+            }
+
+
+            const result =
+              await response.json();
+
+
+            if (
+              !result.success
+            ) {
+
+              throw new Error(
+                result.message ||
+                "獎品讀取失敗"
+              );
+
+            }
+
+
+            const rewards =
+              Array.isArray(
+                result.rewards
+              )
+                ? result.rewards
+                    .map(
+                      function(reward) {
+
+                        return String(
+                          reward
+                        );
+
+                      }
+                    )
+                    .filter(
+                      function(reward) {
+
+                        return reward.trim() !== "";
+
+                      }
+                    )
+                : [];
+
+
+            REWARDS_CACHE =
+              rewards;
+
+
+            REWARDS_READY =
+              true;
+
+
+            REWARDS_ERROR =
+              "";
+
+
+            updateRewardReadyStatus();
+
+
+            return REWARDS_CACHE;
+
+
+          } catch (err) {
+
+            console.error(
+              "獎品讀取錯誤：",
+              err
+            );
+
+
+            REWARDS_READY =
+              false;
+
+
+            REWARDS_ERROR =
+              "獎品讀取失敗";
+
+
+            updateRewardReadyStatus();
+
+
+            throw err;
+
+
+          } finally {
+
+            REWARDS_LOADING_PROMISE =
+              null;
+
+          }
+
+        })();
+
+
+      return REWARDS_LOADING_PROMISE;
+
+    }
+
+
+    // ========================================
+    // 更新獎品讀取狀態
+    // ========================================
+
+    function updateRewardReadyStatus() {
+
+      const status =
+        document.getElementById(
+          "reward_ready_status"
+        );
+
+
+      if (
+        !status
+      ) {
+
+        return;
+
+      }
+
+
+      if (
+        REWARDS_READY
+      ) {
+
+        status.innerText =
+          "✓ 獎品已讀取完成";
+
+
+        status.className =
+          "reward-ready-text ready";
+
+
+        return;
+
+      }
+
+
+      if (
+        REWARDS_ERROR
+      ) {
+
+        status.innerText =
+          "獎品讀取失敗，開啟時可重新讀取";
+
+
+        status.className =
+          "reward-ready-text error";
+
+
+        return;
+
+      }
+
+
+      status.innerText =
+        "獎品讀取中...";
+
+
+      status.className =
+        "reward-ready-text";
+
+    }
+    
+        // ========================================
+    // 填入獎品選單
+    // ========================================
+
+    function fillRewardSelect(
+      rewards
+    ) {
+
+      const select =
+        document.getElementById(
+          "reward_select"
+        );
+
+
+      if (
+        !select
+      ) {
+
+        return;
+
+      }
+
+
+      select.innerHTML =
+        "";
+
+
+      const defaultOption =
+        document.createElement(
+          "option"
+        );
+
+
+      defaultOption.value =
+        "";
+
+
+      defaultOption.textContent =
+        "-- 點此選擇品項直接加入 --";
+
+
+      select.appendChild(
+        defaultOption
+      );
+
+
+      rewards.forEach(
+        function(reward) {
+
+          const option =
+            document.createElement(
+              "option"
+            );
+
+
+          const category =
+            isRewardCategory(
+              reward
+            );
+
+
+          if (
+            category
+          ) {
+
+            option.value =
+              "";
+
+
+            option.textContent =
+              reward;
+
+
+            option.disabled =
+              true;
+
+
+            option.className =
+              "reward-category";
+
+
+          } else {
+
+            option.value =
+              reward;
+
+
+            option.textContent =
+              reward;
+
+          }
+
+
+          select.appendChild(
+            option
+          );
+
+        }
+      );
+
+    }
+
+
+    // ========================================
+    // 會員查詢
+    // ========================================
+
+    async function showHint(str) {
+
+      const errorMsg =
+        document.getElementById(
+          "error_message"
+        );
+
+
+      const loadingSpan =
+        document.getElementById(
+          "loading"
+        );
+
+
+      const orderStatus =
+        document.getElementById(
+          "order_status"
+        );
+
+
+      const currentTimeSpan =
+        document.getElementById(
+          "current_time"
+        );
+
+
+      const noticeBox =
+        document.getElementById(
+          "notice_box"
+        );
+
+
+      const queryButton =
+        document.querySelector(
+          ".btn-query"
+        );
+
+
+      const rewardButtonArea =
+        document.getElementById(
+          "reward_button_area"
+        );
+
+
+      str =
+        str.trim();
+
+
+      if (
+        queryButton.disabled
+      ) {
+
+        return;
+
+      }
+
+
+      if (
+        str === ""
+      ) {
+
+        errorMsg.innerText =
+          "請輸入 會員號＋貴賓本名";
+
+
+        orderStatus.innerHTML =
+          "";
+
+
+        currentTimeSpan.innerText =
+          "";
+
+
+        noticeBox.style.display =
+          "none";
+
+
+        rewardButtonArea.style.display =
+          "none";
+
+
+        setRewardButtonDisabled(
+          true
+        );
+
+
+        return;
+
+      }
+
+
+      queryButton.disabled =
+        true;
+
+
+      errorMsg.innerText =
+        "";
+
+
+      loadingSpan.style.display =
+        "inline-block";
+
+
+      orderStatus.innerHTML =
+        "";
+
+
+      currentTimeSpan.innerText =
+        "";
+
+
+      noticeBox.style.display =
+        "none";
+
+
+      rewardButtonArea.style.display =
+        "none";
+
+
+      setRewardButtonDisabled(
+        true
+      );
+
+
+      CURRENT_UID =
+        "";
+
+
+      CURRENT_POINTS =
+        "";
+
+
+      REWARDS_CACHE =
+        [];
+
+
+      REWARDS_READY =
+        false;
+
+
+      REWARDS_ERROR =
+        "";
+
+
+      REWARDS_LOADING_PROMISE =
+        null;
+
+
+      REWARD_OPENING =
+        false;
+
+
+      updateRewardReadyStatus();
+
+
+      closeRewardModal();
+
+
+      try {
+
+        const apiUrl =
+          await getApiUrl();
+
+
+        API_READY =
+          true;
+
+
+        preloadRewards()
+          .catch(
+            function() {}
+          );
+
+
+        fetch(
+          apiUrl +
+          (
+            apiUrl.indexOf("?") === -1
+              ? "?"
+              : "&"
+          ) +
+          "warmup=true",
+          {
+            method: "GET",
+            mode: "no-cors"
+          }
+        )
+        .catch(
+          function() {}
+        );
+
+
+        const separator =
+          apiUrl.indexOf("?") === -1
+            ? "?"
+            : "&";
+
+
+        const requestUrl =
+          apiUrl +
+          separator +
+          "uid=" +
+          encodeURIComponent(
+            str
+          );
+
+
+        const response =
+          await fetch(
+            requestUrl,
+            {
+              method: "GET",
+              cache: "no-store"
+            }
+          );
+
+
+        if (
+          !response.ok
+        ) {
+
+          throw new Error(
+            "GAS_REQUEST_ERROR"
+          );
+
+        }
+
+
+        const result =
+          await response.json();
+
+
+        if (
+          !result.success
+        ) {
+
+          errorMsg.innerText =
+            result.message ||
+            "查無會員";
+
+
+          orderStatus.innerHTML =
+            "";
+
+
+          currentTimeSpan.innerText =
+            "";
+
+
+          noticeBox.style.display =
+            "none";
+
+
+          rewardButtonArea.style.display =
+            "none";
+
+
+          setRewardButtonDisabled(
+            true
+          );
+
+
+          return;
+
+        }
+
+
+        CURRENT_UID =
+          String(
+            result.uid ||
+            str
+          );
+
+
+        CURRENT_POINTS =
+          result.points;
+
+
+        orderStatus.innerHTML =
+
+          "<table>" +
+
+            "<tr>" +
+
+              "<th>會員</th>" +
+
+              "<th>目前點數</th>" +
+
+            "</tr>" +
+
+            "<tr>" +
+
+              "<td>" +
+
+                escapeHtml(
+                  String(
+                    result.uid
+                  )
+                ) +
+
+              "</td>" +
+
+              "<td>" +
+
+                escapeHtml(
+                  String(
+                    result.points
+                  )
+                ) +
+
+              "</td>" +
+
+            "</tr>" +
+
+          "</table>";
+
+
+        const now =
+          new Date();
+
+
+        const formattedTime =
+
+          now.getFullYear() +
+          "/" +
+
+          String(
+            now.getMonth() + 1
+          ).padStart(2, "0") +
+
+          "/" +
+
+          String(
+            now.getDate()
+          ).padStart(2, "0") +
+
+          " " +
+
+          String(
+            now.getHours()
+          ).padStart(2, "0") +
+
+          ":" +
+
+          String(
+            now.getMinutes()
+          ).padStart(2, "0") +
+
+          ":" +
+
+          String(
+            now.getSeconds()
+          ).padStart(2, "0");
+
+
+        currentTimeSpan.innerText =
+          "查詢時間：" +
+          formattedTime;
+
+
+        noticeBox.style.display =
+          "block";
+
+
+        rewardButtonArea.style.display =
+          "block";
+
+
+        /*
+          ★ 查詢完成後才讓兌換按鈕恢復
+          ★ 但如果獎品還在讀取，仍保持禁止
+        */
+
+        if (
+          REWARDS_READY
+        ) {
+
+          setRewardButtonDisabled(
+            false
+          );
+
+        } else if (
+          REWARDS_LOADING_PROMISE
+        ) {
+
+          setRewardButtonDisabled(
+            true
+          );
+
+          REWARDS_LOADING_PROMISE
+            .then(
+              function() {
+
+                if (
+                  CURRENT_UID &&
+                  !REWARD_OPENING
+                ) {
+
+                  setRewardButtonDisabled(
+                    false
+                  );
+
+                }
+
+              }
+            )
+            .catch(
+              function() {
+
+                if (
+                  CURRENT_UID &&
+                  !REWARD_OPENING
+                ) {
+
+                  setRewardButtonDisabled(
+                    false
+                  );
+
+                }
+
+              }
+            );
+
+        } else {
+
+          setRewardButtonDisabled(
+            false
+          );
+
+        }
+
+
+        updateRewardReadyStatus();
+
+
+      } catch (error) {
+
+        console.error(
+          "API 查詢錯誤：",
+          error
+        );
+
+
+        errorMsg.innerText =
+          "連線伺服器失敗，請稍後再試";
+
+
+        orderStatus.innerHTML =
+          "";
+
+
+        currentTimeSpan.innerText =
+          "";
+
+
+        noticeBox.style.display =
+          "none";
+
+
+        rewardButtonArea.style.display =
+          "none";
+
+
+        setRewardButtonDisabled(
+          true
+        );
+
+
+      } finally {
+
+        loadingSpan.style.display =
+          "none";
+
+
+        queryButton.disabled =
+          false;
+
+
+        API_READY =
+          false;
+
+      }
+
+    }
+
+
+    // ========================================
+    // 重置分享按鈕
+    // ========================================
+
+    function resetRewardShareButton() {
+
+      const sendButton =
+        document.getElementById(
+          "send_line_button"
+        );
+
+
+      if (
+        !sendButton
+      ) {
+
+        return;
+
+      }
+
+
+      sendButton.innerText =
+        "💬 分享給官方 LINE@";
+
+
+      sendButton.className =
+        "btn-send-line";
+
+
+      sendButton.dataset.mode =
+        "share";
+
+
+      sendButton.disabled =
+        true;
+
+    }
+
+
+    // ========================================
+    // 同步更新目前會員點數
+    // ========================================
+
+    async function syncCurrentMemberPoints() {
+
+      if (
+        !CURRENT_UID
+      ) {
+
+        return false;
+
+      }
+
+
+      try {
+
+        const apiUrl =
+          await getApiUrl();
+
+
+        const separator =
+          apiUrl.indexOf("?") === -1
+            ? "?"
+            : "&";
+
+
+        const requestUrl =
+          apiUrl +
+          separator +
+          "uid=" +
+          encodeURIComponent(
+            CURRENT_UID
+          );
+
+
+        const response =
+          await fetch(
+            requestUrl,
+            {
+              method: "GET",
+              cache: "no-store"
+            }
+          );
+
+
+        if (
+          !response.ok
+        ) {
+
+          throw new Error(
+            "POINTS_SYNC_REQUEST_ERROR"
+          );
+
+        }
+
+
+        const result =
+          await response.json();
+
+
+        if (
+          !result.success
+        ) {
+
+          throw new Error(
+            result.message ||
+            "POINTS_SYNC_ERROR"
+          );
+
+        }
+
+
+        CURRENT_UID =
+          String(
+            result.uid ||
+            CURRENT_UID
+          );
+
+
+        CURRENT_POINTS =
+          result.points;
+
+
+        const orderStatus =
+          document.getElementById(
+            "order_status"
+          );
+
+
+        if (
+          orderStatus
+        ) {
+
+          orderStatus.innerHTML =
+
+            "<table>" +
+
+              "<tr>" +
+
+                "<th>會員</th>" +
+
+                "<th>目前點數</th>" +
+
+              "</tr>" +
+
+              "<tr>" +
+
+                "<td>" +
+
+                  escapeHtml(
+                    CURRENT_UID
+                  ) +
+
+                "</td>" +
+
+                "<td>" +
+
+                  escapeHtml(
+                    String(
+                      CURRENT_POINTS
+                    )
+                  ) +
+
+                "</td>" +
+
+              "</tr>" +
+
+            "</table>";
+
+        }
+
+
+        const currentTimeSpan =
+          document.getElementById(
+            "current_time"
+          );
+
+
+        if (
+          currentTimeSpan
+        ) {
+
+          const now =
+            new Date();
+
+
+          const formattedTime =
+
+            now.getFullYear() +
+            "/" +
+
+            String(
+              now.getMonth() + 1
+            ).padStart(2, "0") +
+
+            "/" +
+
+            String(
+              now.getDate()
+            ).padStart(2, "0") +
+
+            " " +
+
+            String(
+              now.getHours()
+            ).padStart(2, "0") +
+
+            ":" +
+
+            String(
+              now.getMinutes()
+            ).padStart(2, "0") +
+
+            ":" +
+
+            String(
+              now.getSeconds()
+            ).padStart(2, "0");
+
+
+          currentTimeSpan.innerText =
+            "點數更新時間：" +
+            formattedTime;
+
+        }
+
+
+        console.log(
+          "會員點數已同步更新：",
+          CURRENT_POINTS
+        );
+
+
+        return true;
+
+
+      } catch (error) {
+
+        console.error(
+          "同步會員點數錯誤：",
+          error
+        );
+
+
+        return false;
+
+      }
+
+    }
+
+
+    // ========================================
+    // 開啟兌換獎品
+    //
+    // ★ 重要：
+    // ★ 點擊後立即鎖住按鈕
+    // ★ 等最新點數同步完成
+    // ★ 才允許再次點擊
+    // ========================================
+
+    async function openRewardModal() {
+
+      /*
+        ★ 防止快速連點
+        ★ 如果前一次還沒完成，直接不執行
+      */
+
+      if (
+        REWARD_OPENING
+      ) {
+
+        return;
+
+      }
+
+
+      if (
+        !CURRENT_UID
+      ) {
+
+        return;
+
+      }
+
+
+      const rewardButton =
+        document.querySelector(
+          ".btn-reward"
+        );
+
+
+      /*
+        ★ 立即禁止按鈕
+      */
+
+      REWARD_OPENING =
+        true;
+
+
+      setRewardButtonDisabled(
+        true
+      );
+
+
+      const modal =
+        document.getElementById(
+          "reward_modal"
+        );
+
+
+      const loading =
+        document.getElementById(
+          "reward_loading"
+        );
+
+
+      const error =
+        document.getElementById(
+          "reward_error"
+        );
+
+
+      try {
+
+        // ========================================
+        // 開啟 Modal 前先同步最新點數
+        // ========================================
+
+        error.innerText =
+          "正在同步最新點數...";
+
+
+        const pointsSynced =
+          await syncCurrentMemberPoints();
+
+
+        /*
+          ★ 點數還沒拿到結果
+          ★ 就絕對不進入下一步
+        */
+
+        if (
+          !pointsSynced
+        ) {
+
+          error.innerText =
+            "目前點數更新失敗，請稍後再試";
+
+
+          return;
+
+        }
+
+
+        // ========================================
+        // 點數同步成功
+        // ========================================
+
+        SELECTED_REWARDS =
+          {};
+
+
+        resetRewardShareButton();
+
+
+        renderSelectedRewards();
+
+
+        error.innerText =
+          "";
+
+
+        modal.style.display =
+          "flex";
+
+
+        // ========================================
+        // 獎品已經讀取完成
+        // ========================================
+
+        if (
+          REWARDS_READY
+        ) {
+
+          loading.style.display =
+            "none";
+
+
+          fillRewardSelect(
+            REWARDS_CACHE
+          );
+
+
+          if (
+            REWARDS_CACHE.length === 0
+          ) {
+
+            error.innerText =
+              "目前沒有可兌換的獎品";
+
+          }
+
+
+          updatePointsCalculation();
+
+
+          updateRewardPreview();
+
+
+          updateSendButtonState();
+
+
+          return;
+
+        }
+
+
+        // ========================================
+        // 尚未讀取獎品
+        // ========================================
+
+        loading.style.display =
+          "block";
+
+
+        try {
+
+          const rewards =
+            await preloadRewards();
+
+
+          loading.style.display =
+            "none";
+
+
+          fillRewardSelect(
+            rewards
+          );
+
+
+          if (
+            rewards.length === 0
+          ) {
+
+            error.innerText =
+              "目前沒有可兌換的獎品";
+
+          }
+
+
+          updatePointsCalculation();
+
+
+          updateRewardPreview();
+
+
+          updateSendButtonState();
+
+
+        } catch (err) {
+
+          console.error(
+            "開啟獎品時讀取錯誤：",
+            err
+          );
+
+
+          loading.style.display =
+            "none";
+
+
+          error.innerText =
+            "獎品讀取失敗，請稍後再試";
+
+        }
+
+
+      } finally {
+
+        /*
+          ★ 整個開啟流程結束
+          ★ 才解除 REWARD_OPENING
+          ★ 按鈕才恢復可以點
+        */
+
+        REWARD_OPENING =
+          false;
+
+
+        /*
+          ★ 只有還有會員資料時才恢復
+          ★ 如果查詢已經被其他操作清掉，就維持禁止
+        */
+
+        if (
+          CURRENT_UID
+        ) {
+
+          setRewardButtonDisabled(
+            false
+          );
+
+        } else {
+
+          setRewardButtonDisabled(
+            true
+          );
+
+        }
+
+      }
+
+    }
+
+
+    // ========================================
+    // 選單選擇獎品
+    // ========================================
+
+    function addRewardFromSelect() {
+
+      const select =
+        document.getElementById(
+          "reward_select"
+        );
+
+
+      const reward =
+        select.value;
+
+
+      if (
+        !reward
+      ) {
+
+        return;
+
+      }
+
+
+      if (
+        isRewardCategory(
+          reward
+        )
+      ) {
+
+        select.value =
+          "";
+
+
+        return;
+
+      }
+
+
+      if (
+        Object.prototype.hasOwnProperty.call(
+          SELECTED_REWARDS,
+          reward
+        )
+      ) {
+
+        SELECTED_REWARDS[reward] +=
+          1;
+
+      } else {
+
+        SELECTED_REWARDS[reward] =
+          1;
+
+      }
+
+
+      const sendButton =
+        document.getElementById(
+          "send_line_button"
+        );
+
+
+      if (
+        sendButton &&
+        sendButton.dataset.mode !==
+        "return-line"
+      ) {
+
+        sendButton.dataset.mode =
+          "share";
+
+        sendButton.innerText =
+          "💬 分享給官方 LINE@";
+
+      }
+
+
+      renderSelectedRewards();
+
+
+      select.value =
+        "";
+
+    }
+    
+        // ========================================
+    // 增加數量
+    // ========================================
+
+    function increaseReward(
+      reward
+    ) {
+
+      if (
+        isRewardCategory(
+          reward
+        )
+      ) {
+
+        return;
+
+      }
+
+
+      if (
+        !Object.prototype.hasOwnProperty.call(
+          SELECTED_REWARDS,
+          reward
+        )
+      ) {
+
+        SELECTED_REWARDS[reward] =
+          1;
+
+      } else {
+
+        SELECTED_REWARDS[reward] +=
+          1;
+
+      }
+
+
+      renderSelectedRewards();
+
+    }
+
+
+    // ========================================
+    // 減少數量
+    // ========================================
+
+    function decreaseReward(
+      reward
+    ) {
+
+      if (
+        isRewardCategory(
+          reward
+        )
+      ) {
+
+        return;
+
+      }
+
+
+      if (
+        !Object.prototype.hasOwnProperty.call(
+          SELECTED_REWARDS,
+          reward
+        )
+      ) {
+
+        return;
+
+      }
+
+
+      SELECTED_REWARDS[reward] -=
+        1;
+
+
+      if (
+        SELECTED_REWARDS[reward] <= 0
+      ) {
+
+        delete SELECTED_REWARDS[
+          reward
+        ];
+
+      }
+
+
+      renderSelectedRewards();
+
+    }
+
+
+    // ========================================
+    // 移除獎品
+    // ========================================
+
+    function removeReward(
+      reward
+    ) {
+
+      if (
+        isRewardCategory(
+          reward
+        )
+      ) {
+
+        return;
+
+      }
+
+
+      delete SELECTED_REWARDS[
+        reward
+      ];
+
+
+      renderSelectedRewards();
+
+    }
+
+
+    // ========================================
+    // 顯示已選獎品
+    // ========================================
+
+    function renderSelectedRewards() {
+
+      const box =
+        document.getElementById(
+          "selectedItemsBox"
+        );
+
+
+      const sendButton =
+        document.getElementById(
+          "send_line_button"
+        );
+
+
+      box.innerHTML =
+        "";
+
+
+      Object.keys(
+        SELECTED_REWARDS
+      ).forEach(
+        function(reward) {
+
+          if (
+            isRewardCategory(
+              reward
+            )
+          ) {
+
+            delete SELECTED_REWARDS[
+              reward
+            ];
+
+          }
+
+        }
+      );
+
+
+      const rewards =
+        Object.keys(
+          SELECTED_REWARDS
+        );
+
+
+      if (
+        rewards.length === 0
+      ) {
+
+        box.innerHTML =
+
+          '<div class="selected-empty">' +
+
+          '尚未選擇任何獎品' +
+
+          '</div>';
+
+
+        updatePointsCalculation();
+
+
+        updateRewardPreview();
+
+
+        if (
+          sendButton &&
+          sendButton.dataset.mode !==
+          "return-line"
+        ) {
+
+          sendButton.disabled =
+            true;
+
+        } else {
+
+          updateSendButtonState();
+
+        }
+
+
+        return;
+
+      }
+
+
+      rewards.forEach(
+        function(reward) {
+
+          const quantity =
+            SELECTED_REWARDS[
+              reward
+            ];
+
+
+          const item =
+            document.createElement(
+              "div"
+            );
+
+
+          item.className =
+            "selected-item";
+
+
+          const name =
+            document.createElement(
+              "div"
+            );
+
+
+          name.className =
+            "selected-item-name";
+
+
+          name.innerText =
+            reward;
+
+
+          const quantityControl =
+            document.createElement(
+              "div"
+            );
+
+
+          quantityControl.className =
+            "quantity-control";
+
+
+          const minus =
+            document.createElement(
+              "button"
+            );
+
+
+          minus.type =
+            "button";
+
+
+          minus.className =
+            "quantity-btn";
+
+
+          minus.innerText =
+            "−";
+
+
+          minus.onclick =
+            function() {
+
+              decreaseReward(
+                reward
+              );
+
+            };
+
+
+          const number =
+            document.createElement(
+              "span"
+            );
+
+
+          number.className =
+            "quantity-number";
+
+
+          number.innerText =
+            quantity;
+
+
+          const plus =
+            document.createElement(
+              "button"
+            );
+
+
+          plus.type =
+            "button";
+
+
+          plus.className =
+            "quantity-btn";
+
+
+          plus.innerText =
+            "+";
+
+
+          plus.onclick =
+            function() {
+
+              increaseReward(
+                reward
+              );
+
+            };
+
+
+          quantityControl.appendChild(
+            minus
+          );
+
+
+          quantityControl.appendChild(
+            number
+          );
+
+
+          quantityControl.appendChild(
+            plus
+          );
+
+
+          const remove =
+            document.createElement(
+              "button"
+            );
+
+
+          remove.type =
+            "button";
+
+
+          remove.className =
+            "remove-item";
+
+
+          remove.innerText =
+            "✕";
+
+
+          remove.title =
+            "移除";
+
+
+          remove.onclick =
+            function() {
+
+              removeReward(
+                reward
+              );
+
+            };
+
+
+          item.appendChild(
+            name
+          );
+
+
+          item.appendChild(
+            quantityControl
+          );
+
+
+          item.appendChild(
+            remove
+          );
+
+
+          box.appendChild(
+            item
+          );
+
+        }
+      );
+
+
+      updatePointsCalculation();
+
+
+      updateRewardPreview();
+
+
+      updateSendButtonState();
+
+    }
+
+
+    // ========================================
+    // 更新點數計算
+    // ========================================
+
+    function updatePointsCalculation() {
+
+      const calculationBox =
+        document.getElementById(
+          "points_calculation"
+        );
+
+
+      if (
+        !calculationBox
+      ) {
+
+        return;
+
+      }
+
+
+      const result =
+        buildPointsCalculation();
+
+
+      calculationBox.innerText =
+        result.text;
+
+
+      calculationBox.classList.remove(
+        "insufficient"
+      );
+
+
+      calculationBox.classList.remove(
+        "sufficient"
+      );
+
+
+      if (
+        result.insufficient
+      ) {
+
+        calculationBox.classList.add(
+          "insufficient"
+        );
+
+      } else {
+
+        calculationBox.classList.add(
+          "sufficient"
+        );
+
+      }
+
+
+      updateSendButtonState();
+
+    }
+
+
+    // ========================================
+    // 建立分享文字
+    // ========================================
+
+    function buildRewardMessage() {
+
+      const rewards =
+        Object.keys(
+          SELECTED_REWARDS
+        ).filter(
+          function(reward) {
+
+            return !isRewardCategory(
+              reward
+            );
+
+          }
+        );
+
+
+      const pointsResult =
+        buildPointsCalculation();
+
+
+      let message =
+
+        "🎁 兌換獎品" +
+        "\n\n";
+
+
+      message +=
+
+        "會員：" +
+        CURRENT_UID +
+        "\n";
+
+
+      message +=
+
+        "目前點數 : " +
+        CURRENT_POINTS +
+        "\n";
+
+
+      message +=
+
+        " " +
+        pointsResult.text +
+        "\n";
+
+
+      message +=
+        "\n";
+
+
+      message +=
+        "兌換品項：";
+
+
+      rewards.forEach(
+        function(reward, index) {
+
+          message +=
+
+            "\n" +
+            (index + 1) +
+            ". " +
+            reward +
+            " × " +
+            SELECTED_REWARDS[
+              reward
+            ];
+
+        }
+      );
+
+
+      message +=
+
+        "\n\n" +
+        "請協助是否有貨確認兌換，謝謝。";
+
+
+      return message;
+
+    }
+
+
+    // ========================================
+    // 即時預覽
+    // ========================================
+
+    function updateRewardPreview() {
+
+      const preview =
+        document.getElementById(
+          "reward_preview"
+        );
+
+
+      if (
+        !preview
+      ) {
+
+        return;
+
+      }
+
+
+      const rewards =
+        Object.keys(
+          SELECTED_REWARDS
+        ).filter(
+          function(reward) {
+
+            return !isRewardCategory(
+              reward
+            );
+
+          }
+        );
+
+
+      if (
+        rewards.length === 0
+      ) {
+
+        preview.innerText =
+          "尚未選擇兌換品項";
+
+
+        return;
+
+      }
+
+
+      preview.innerText =
+        buildRewardMessage();
+
+    }
+
+
+    // ========================================
+    // LINE 分享
+    // ========================================
+
+    function sendRewardToLine() {
+
+      const sendButton =
+        document.getElementById(
+          "send_line_button"
+        );
+
+
+      if (
+        sendButton &&
+        sendButton.dataset.mode ===
+        "return-line"
+      ) {
+
+        window.open(
+          OFFICIAL_LINE_URL,
+          "_blank"
+        );
+
+
+        return;
+
+      }
+
+
+      const rewards =
+        Object.keys(
+          SELECTED_REWARDS
+        ).filter(
+          function(reward) {
+
+            return !isRewardCategory(
+              reward
+            );
+
+          }
+        );
+
+
+      if (
+        !CURRENT_UID ||
+        rewards.length === 0
+      ) {
+
+        return;
+
+      }
+
+
+      if (
+        !canSendReward()
+      ) {
+
+        updatePointsCalculation();
+
+        return;
+
+      }
+
+
+      const message =
+        buildRewardMessage();
+
+
+      const lineShareUrl =
+        "https://line.me/R/share?text=" +
+        encodeURIComponent(
+          message
+        );
+
+
+      window.open(
+        lineShareUrl,
+        "_blank"
+      );
+
+
+      if (
+        sendButton
+      ) {
+
+        sendButton.innerText =
+          "返回 官方LINE@";
+
+
+        sendButton.className =
+          "btn-send-line";
+
+
+        sendButton.disabled =
+          false;
+
+
+        sendButton.dataset.mode =
+          "return-line";
+
+      }
+
+    }
+
+
+    // ========================================
+    // 關閉 Modal
+    // ========================================
+
+    function closeRewardModal() {
+
+      const modal =
+        document.getElementById(
+          "reward_modal"
+        );
+
+
+      if (
+        modal
+      ) {
+
+        modal.style.display =
+          "none";
+
+      }
+
+    }
+
+
+    // ========================================
+    // Modal 背景關閉
+    // ========================================
+
+    function rewardModalBackgroundClick(
+      event
+    ) {
+
+      if (
+        event.target.id ===
+        "reward_modal"
+      ) {
+
+        closeRewardModal();
+
+      }
+
+    }
+
+
+    // ========================================
+    // HTML 安全處理
+    // ========================================
+
+    function escapeHtml(value) {
+
+      return String(value)
+
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+
+        .replace(
+          /</g,
+          "&lt;"
+        )
+
+        .replace(
+          />/g,
+          "&gt;"
+        )
+
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+
+        .replace(
+          /'/g,
+          "&#039;"
+        );
+
+    }
+
+  </script>
+
+</head>
+
+<body>
+
+  <!-- ======================================
+       主畫面
+       ====================================== -->
+
+  <div class="container">
+
+<h2>
+  金正旺VIP查詢系統
+</h2>
+
+
+<div class="input-group">
+
+  <input
+    type="text"
+    id="uid"
+    placeholder="請輸入 會號+貴賓本名"
+    autocomplete="off"
+    autocorrect="off"
+    autocapitalize="off"
+    spellcheck="false"
+  >
+
+
+  <button
+    class="btn btn-query"
+    onclick="
+      showHint(
+        document.getElementById('uid').value
+      );
+    "
+  >
+    查詢
+  </button>
+
+</div>
+
+
+<span
+  id="loading"
+  class="loading"
+>
+  讀取中
+</span>
+
+
+<span
+  id="error_message"
+></span>
+
+
+<div
+  id="order_status"
+></div>
+
+
+<span
+  id="current_time"
+></span>
+
+
+<!-- ====================================
+     兌換獎品按鈕
+     ==================================== -->
+
+<div
+  id="reward_button_area"
+>
+
+  <button
+    type="button"
+    class="btn btn-reward"
+    disabled
+    onclick="openRewardModal();"
+  >
+    🎁 兌換獎品
+  </button>
+
+
+  <span
+    id="reward_ready_status"
+    class="reward-ready-text"
+  >
+    獎品讀取中...
+  </span>
+
+</div>
+
+
+<div
+  id="notice_box"
+  class="notice-box"
+  style="display: none;"
+>
+
+  🔔 貼心提醒：<br>
+
+  當日消費之點數，
+  將於【隔日】統一入點唷～
+
+</div>
+
+
+<a
+  class="btn btn-line"
+  href="https://line.me/R/ti/p/@goldwon888"
+  target="_blank"
+>
+  返回 官方LINE@
+</a>
+
+  </div>
+
+
+  <!-- ======================================
+       兌換獎品 Modal
+       ====================================== -->
+
+  <div
+    id="reward_modal"
+    onclick="rewardModalBackgroundClick(event);"
+  >
+
+<div
+  class="reward-panel"
+>
+
+
+  <div
+    class="reward-title"
+  >
+    🎁 請選擇兌換獎品
+  </div>
+
+
+  <div
+    class="reward-label"
+  >
+
+    選擇品項
+
+    <span>
+      （點擊即可加入，可選多個）
+    </span>
+
+  </div>
+
+
+  <select
+    id="reward_select"
+    onchange="addRewardFromSelect();"
+  >
+
+    <option value="">
+      -- 點此選擇品項直接加入 --
+    </option>
+
+  </select>
+
+
+  <div
+    class="selected-title"
+  >
+    🎁 已選擇品項
+  </div>
+
+
+  <div
+    id="selectedItemsBox"
+  >
+
+    <div
+      class="selected-empty"
+    >
+      尚未選擇任何獎品
+    </div>
+
+  </div>
+
+
+  <div
+    class="points-box"
+  >
+
+    <div
+      class="points-title"
+    >
+      💰 點數計算
+    </div>
+
+
+    <div
+      id="points_calculation"
+    >
+      尚未選擇兌換品項
+    </div>
+
+  </div>
+
+
+  <div
+    class="preview-box"
+  >
+
+    <div
+      class="preview-title"
+    >
+      👀 即時預覽
+    </div>
+
+
+    <div
+      id="reward_preview"
+    >
+      尚未選擇兌換品項
+    </div>
+
+  </div>
+
+
+  <div
+    id="reward_loading"
+    class="reward-loading"
+    style="display: none;"
+  >
+    獎品讀取中...
+  </div>
+
+
+  <div
+    id="reward_error"
+    class="reward-error"
+  ></div>
+
+
+  <div
+    class="reward-actions"
+  >
+
+
+    <button
+      type="button"
+      class="btn-close-reward"
+      onclick="closeRewardModal();"
+    >
+      關閉
+    </button>
+
+
+    <button
+      type="button"
+      id="send_line_button"
+      class="btn-send-line"
+      disabled
+      data-mode="share"
+      onclick="sendRewardToLine();"
+    >
+      💬 分享給官方 LINE@
+    </button>
+
+
+  </div>
+
+
+</div>
+
+  </div>
+
+
+  <div
+    class="copyright"
+  >
+    Copyright © 2026 ｊLINE: jimi102
+  </div>
+
+</body>
+
+</html>
