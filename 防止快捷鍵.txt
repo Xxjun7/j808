@@ -1,0 +1,59 @@
+      // ========================================
+      // 防止快捷鍵：書籤 / 開發者工具 / 原始碼
+      // ========================================
+      document.addEventListener(
+        "keydown",
+        function(e) {
+          const key = e.key.toLowerCase();
+
+          // 防止加入書籤：Ctrl + D / Command + D
+          if (
+            (e.ctrlKey || e.metaKey) &&
+            key === "d"
+          ) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            return false;
+          }
+
+          // 防止 F12
+          if (key === "f12") {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            return false;
+          }
+
+          // 防止 Ctrl + Shift + I / J / C
+          if (
+            e.ctrlKey &&
+            e.shiftKey &&
+            ["i", "j", "c"].includes(key)
+          ) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            return false;
+          }
+
+          // 防止 Ctrl + U / Command + U
+          if (
+            (e.ctrlKey || e.metaKey) &&
+            key === "u"
+          ) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            return false;
+          }
+
+          // 防止 Ctrl + Shift + K（部分瀏覽器）
+          if (
+            e.ctrlKey &&
+            e.shiftKey &&
+            key === "k"
+          ) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            return false;
+          }
+        },
+        true
+      );
